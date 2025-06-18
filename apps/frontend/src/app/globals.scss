@@ -1,0 +1,57 @@
+@use "tailwindcss";
+@use "./css/components/buttons.scss";
+@use "./css/components/image.scss";
+@use "./css/components/inputs.scss";
+@use "./css/components/dnd.scss";
+@use "./css/components/charts.scss";
+@use "./css/components/switch.scss";
+@use "./css/components/tooltip.scss";
+@use "./css/components/dropdown.scss";
+@use "./css/components/calendar.scss";
+@use "./css/components/tables.scss";
+@use "./css/components/checkbox.scss";
+@use "./css/components/dashboard.scss";
+@use "./css/components/card.scss";
+
+@use "./css/layouts/header.scss";
+@use "./css/layouts/frame.scss";
+
+@use "./css/base/variables";
+
+* {
+    font-family: var(--font-geist-sans);
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+*::selection {
+    background-color: var(--selection-background);
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+button {
+    cursor: pointer;
+}
+
+.border-color {
+    border-color: var(--default-border-color);
+}
+
+.bg-color {
+    background-color: var(--background-color);
+}
+
+
+.default-text-color {
+    color: var(--default-text-color);
+}
+
+label {
+    margin-bottom: -10px;
+    margin-left: 5px;
+}

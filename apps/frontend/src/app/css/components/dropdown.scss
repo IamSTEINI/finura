@@ -1,0 +1,25 @@
+.dropdown {
+    background-color: var(--dropdown-background-color);
+    border-color: var(--dropdown-border-color);
+}
+
+.dropdown-input,.dropdown-input:hover, .dropdown-input:active, .dropdown-input:focus {
+    border: none;
+    border-radius: 0;
+    border-bottom: solid 1px var(--dropdown-border-color);
+}
+
+.dropdown-item-hover {
+    background-color: var(--dropdown-background-color);
+    filter: brightness(120%);
+}
+
+.dropdown-bare {
+    background-color: transparent !important;
+    border: solid 0px transparent;
+    box-shadow: none;
+}
+.dropdown-blur {
+    background-color: transparent !important;
+    backdrop-filter: blur(5px) !important;
+}

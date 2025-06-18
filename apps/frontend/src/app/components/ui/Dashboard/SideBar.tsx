@@ -1,0 +1,178 @@
+import { BarChart3, Home, Settings, Users } from "lucide-react";
+import DropDown from "../DropDown";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import DashboardUser from "./UserSection";
+import ToolTip from "../Tooltip";
+
+interface SidebarProps {
+	isCollapsed: boolean;
+	setIsCollapsed: (isCollapsed: boolean) => void;
+	currentSelectedTab?: string;
+	onChange?: (tabLabel: string) => void;
+}
+
+export const Sidebar = ({
+	isCollapsed,
+	currentSelectedTab = "Dashboard",
+	onChange,
+}: SidebarProps) => {
+	const menuItems = [
+		{ icon: Home, label: "Dashboard" },
+		{ icon: Users, label: "Users" },
+		{ icon: BarChart3, label: "Analytics" },
+		{ icon: Settings, label: "Settings" },
+	];
+
+	const [selectedWorkSpace, setSelectedWorkspace] = useState("");
+
+	return (
+		<motion.div
+			initial={false}
+			animate={{ width: isCollapsed ? "4rem" : "16rem" }}
+			transition={{ duration: 0.3, ease: "easeInOut" }}
+			className={`sidebar h-screen flex flex-col relative`}>
+			<div className="h-[50px] min-h-[50px] max-h-[50px] border-b sidebar-border-color flex items-center justify-between">
+				<div className="flex items-center w-full h-full space-x-3">
+					<div className="w-8 min-w-8 h-8 min-h-8 ml-4 flex items-center justify-center">
+						<Image
+							src={"/finura/icon.ico"}
+							alt="Finura logo"
+							width={100}
+							height={100}
+						/>
+					</div>
+					<AnimatePresence initial={false}>
+						{!isCollapsed && (
+							<motion.div
+								className="flex-1 mr-2"
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+								transition={{ duration: 0.2 }}>
+								<DropDown
+									data={[
+										{
+											label: "Marketing Team",
+											value: "marketing",
+										},
+									]}
+									selected={selectedWorkSpace}
+									onChange={setSelectedWorkspace}
+									searchable={false}
+									className="w-full h-8 min-h-8 max-h-8 dropdown-bare"
+									buttonClassName="dropdown-bare"
+									listClassName=""
+									defaultValue="marketing"
+								/>
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</div>
+			</div>
+
+			<nav className="flex-1 p-2">
+				<ul className="space-y-2">
+					{menuItems.map((item, index) => {
+						const Icon = item.icon;
+						const isActive = currentSelectedTab === item.label;
+						return (
+							<li key={index}>
+								{isCollapsed ? (
+									<ToolTip tooltip={item.label} direction="right">
+										<button
+											onClick={() =>
+												onChange?.(item.label)
+											}
+											className={`
+                                        w-full flex items-center dropdown-bare space-x-3 px-3 py-2 rounded-lg
+                                        ${isActive ? "font-bold" : "font-md"}
+                                        ${
+											isCollapsed
+												? "justify-center"
+												: "justify-start"
+										}
+                                        sidebar-button dashboard-text`}>
+											<Icon
+												className={`w-6.5 h-6.5 flex-shrink-0`}
+												strokeWidth={
+													isActive ? 2.5 : 1.5
+												}
+											/>
+											<AnimatePresence initial={false}>
+												{!isCollapsed && (
+													<motion.span
+														initial={{
+															opacity: 0,
+															width: 0,
+														}}
+														animate={{
+															opacity: 1,
+															width: "auto",
+														}}
+														exit={{
+															opacity: 0,
+															width: 0,
+														}}
+														transition={{
+															duration: 0.2,
+														}}
+														className="truncate">
+														{item.label}
+													</motion.span>
+												)}
+											</AnimatePresence>
+										</button>
+									</ToolTip>
+								) : (
+									<button
+										onClick={() => onChange?.(item.label)}
+										className={`
+                                        w-full flex items-center dropdown-bare space-x-3 px-3 py-2 rounded-lg
+                                        ${isActive ? "font-semibold" : "font-md"}
+                                        ${
+											isCollapsed
+												? "justify-center"
+												: "justify-start"
+										}
+                                        sidebar-button dashboard-text`}>
+										<Icon
+											className={`w-6.5 h-6.5 flex-shrink-0`}
+											strokeWidth={isActive ? 2.5 : 1.5}
+										/>
+										<AnimatePresence initial={false}>
+											{!isCollapsed && (
+												<motion.span
+													initial={{
+														opacity: 0,
+														width: 0,
+													}}
+													animate={{
+														opacity: 1,
+														width: "auto",
+													}}
+													exit={{
+														opacity: 0,
+														width: 0,
+													}}
+													transition={{
+														duration: 0.2,
+													}}
+													className="truncate">
+													{item.label}
+												</motion.span>
+											)}
+										</AnimatePresence>
+									</button>
+								)}
+							</li>
+						);
+					})}
+				</ul>
+			</nav>
+
+			<DashboardUser isCollapsed={isCollapsed} />
+		</motion.div>
+	);
+};

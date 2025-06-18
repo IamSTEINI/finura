@@ -1,0 +1,98 @@
+.calendar {
+    max-width: 300px;
+    min-width: 300px;
+    min-height: 365px;
+    max-height: 365px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--calendar-border-color);
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1px 10px;
+    border-bottom: 1px solid var(--calendar-border-color);
+}
+
+.calendar-nav {
+    display: flex;
+    color: var(--calender-day-text);
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    padding: 0px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    background-color: transparent;
+    &:hover {
+        filter: brightness(50%);
+    }
+}
+
+.calendar-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--calendar-border-color);
+}
+
+.calendar-weekday {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: var(--calendar-weekday-opacity, 0.7);
+    padding: 4px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 5px;
+    gap: 2px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    position: relative;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    background-color: var(--calender-day-bg);
+    color: var(--calender-day-text);
+    border: 2px solid transparent;
+}
+
+.calendar-day--today {
+    border: 2px solid var(--calendar-today-bg);
+    color: var(--calendar-today-text) !important;
+    font-weight: 900;
+}
+
+.calendar-day--selected {
+    background: var(--calendar-selected-bg) !important;
+    color: var(--calendar-selected-text) !important;
+    font-weight: 600;
+}
+
+.calendar-day--today:hover,
+.calendar-day--selected:hover {
+    transform: scale(1.05);
+}

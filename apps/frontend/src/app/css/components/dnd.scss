@@ -1,0 +1,32 @@
+.dnd-container {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px dashed var(--border-color, #ddd);
+}
+
+.draggable-object {
+  position: relative;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 6px;
+  cursor: grab;
+}
+
+.draggable-object.dragging {
+  opacity: 0.6;
+  cursor: grabbing;
+}
+
+.draggable-object.drag-over {
+  transform: translateY(2px);
+}
+
+.drop-indicator {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 2px;
+}

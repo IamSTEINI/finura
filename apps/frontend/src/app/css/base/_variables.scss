@@ -1,0 +1,123 @@
+:root {
+	--background-color: #f0e6f1;
+	--selection-background: #965fad7e;
+	--default-border-color: #a191a5;
+	--default-text-color: #ffffff;
+
+	--progressbar-background-color: #c9b3ce;
+
+	--switch-active-background-color: #825494;
+	--switch-unactive-background-color: #c9b3ce;
+	--switch-border-color: #bba7c0;
+
+	--checkmark-active-background-color: #825494;
+	--checkmark-unactive-background-color: #c9b3ce;
+	--checkmark-border-color: #bba7c0;
+
+	--dropdown-background-color: #efe3f1;
+	--dropdown-border-color: #bba7c0;
+
+	--tooltip-background-color: #efe3f1;
+	--tooltip-border-color: #bba7c0;
+
+	--chart-tooltip-background: #efe3f1;
+	--chart-tooltip-border-color: #c9b3ce;
+	--chart-tooltip-text-color: #000000;
+
+	--button-background-color-primary: #825494;
+	--button-text-color-primary: #fff;
+	--button-background-glow: #825494;
+	--button-bonly-color: #000;
+
+	--input-border-color-primary: #160c1a;
+	--input-text-color-primary: #160c1a;
+	--input-background-color-primary: transparent;
+	--input-thumb-color-primary: #825494;
+
+	--header-text-color-primary: #160c1a;
+
+	--calendar-border-color: #bba7c0;
+	--calendar-weekday-opacity: 0.5;
+	--calendar-today-bg: #825494;
+	--calendar-today-text: #160c1a;
+	--calendar-selected-bg: #825494;
+	--calendar-selected-text: #f0e6f1;
+	--calender-day-bg: transparent;
+	--calender-day-text: #160c1a;
+
+	--table-bg-color: transparent;
+	--table-border-color: #c9b3ce;
+
+	--seperator-color: #473b47;
+
+	--card-bg-color: #efe3f1;
+	--card-border-color: #c9b3ce;
+
+	--dashboard-header-color: #f0e6f1;
+	--dashboard-sidebar-color: #cbbccc;
+	--dashboard-sidebar-border-color: #c8b7cc;
+	--dashboard-text-color: #160c1a;
+	--dashboard-sidebar-btn-border-color: #342c36;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		--background-color: #251e25;
+		--button-background-color-primary: #825494;
+		--button-text-color-primary: #fff;
+		--button-background-glow: #825494;
+		--button-bonly-color: #fff;
+
+		--progressbar-background-color: #473b47;
+
+		--switch-active-background-color: #825494;
+		--switch-unactive-background-color: #342c36;
+		--switch-border-color: #473b47;
+
+		--checkmark-active-background-color: #825494;
+		--checkmark-unactive-background-color: #342c36;
+		--checkmark-border-color: #473b47;
+
+		--dropdown-background-color: #342c36;
+		--dropdown-border-color: #473b47;
+
+		--input-border-color-primary: #ffffff;
+		--input-text-color-primary: #ffffff;
+		--input-background-color-primary: transparent;
+		--input-thumb-color-primary: #825494;
+
+		--tooltip-background-color: #342c36;
+		--tooltip-border-color: #473b47;
+
+		--chart-tooltip-background: #342c36;
+		--chart-tooltip-border-color: #473b47;
+		--chart-tooltip-text-color: #faf5f5;
+
+		--header-text-color-primary: #e7e2e7;
+
+		--default-border-color: #3a2b3a;
+		--default-text-color: #ffffff;
+
+		--calendar-border-color: #473b47;
+		--calendar-weekday-opacity: 0.5;
+		--calendar-today-bg: #825494;
+		--calendar-today-text: #ffffff;
+		--calendar-selected-bg: #825494;
+		--calender-day-bg: transparent;
+		--calender-day-text: #ffffff;
+
+		--table-bg-color: transparent;
+		--table-border-color: #473b47;
+
+		--card-bg-color: #342c36;
+		--card-border-color: #473b47;
+
+		--seperator-color: #473b47;
+
+		--dashboard-header-color: #251e25;
+		--dashboard-sidebar-color: #342c36;
+		--dashboard-sidebar-border-color: #473b47;
+		--dashboard-sidebar-btn-border-color: #342c36;
+		--dashboard-text-color: #ffffff;
+	}
+}

@@ -1,0 +1,15 @@
+.switch-border-color {
+    border-color: var(--switch-border-color);
+}
+
+.switch-active-bg-color {
+    background-color: var(--switch-active-background-color) !important;
+}
+
+.switch-unactive-bg-color {
+    background-color: var(--switch-unactive-background-color) !important;
+}
+
+.switch {
+    border-radius: 999px;
+}

@@ -1,0 +1,19 @@
+.header {
+    color: var(--dashboard-text-color);
+    background-color: var(--dashboard-header-color);
+}
+.sidebar {
+    color: var(--dashboard-text-color);
+    background-color: var(--dashboard-sidebar-color);
+    border-right: 1px solid var(--dashboard-sidebar-border-color);
+}
+.sidebar-border-color {
+    border-color: var(--dashboard-sidebar-border-color);
+}
+.sidebar-button {
+    border: 1px solid transparent !important;
+}
+
+.dashboard-text {
+    color: var(--dashboard-text-color);
+}

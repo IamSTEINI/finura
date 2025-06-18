@@ -1,0 +1,10 @@
+.card {
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.card-description {
+    opacity: 50%;
+}
