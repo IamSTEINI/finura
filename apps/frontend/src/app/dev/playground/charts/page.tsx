@@ -4,54 +4,64 @@ import CBarChart from "@/app/components/ui/Charts/BarChart";
 import CHorizontalBarChart from "@/app/components/ui/Charts/HorizontalBarChart";
 import CMultipleBarChart from "@/app/components/ui/Charts/MultipleBarChart";
 import CStackedAreaChart from "@/app/components/ui/Charts/StakedAreaChart";
+import CPieChart from "@/app/components/ui/Charts/PieChart";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const ACdata = [
-    {
-        name: "January",
-        value: 4000,
-        second_value: 2400,
-        third_value: 2400,
-    },
-    {
-        name: "February",
-        value: 3000,
-        second_value: 1398,
-        third_value: 2210,
-    },
-    {
-        name: "March",
-        value: 2000,
-        second_value: 9800,
-        third_value: 2290,
-    },
-    {
-        name: "April",
-        value: 2780,
-        second_value: 3908,
-        third_value: 2000,
-    },
-    {
-        name: "May",
-        value: 1890,
-        second_value: 4800,
-        third_value: 2181,
-    },
-    {
-        name: "June",
-        value: 2390,
-        second_value: 3800,
-        third_value: 2500,
-    },
-    {
-        name: "July",
-        value: 3490,
-        second_value: 4300,
-        third_value: 2100,
-    },
+	{
+		name: "January",
+		value: 4000,
+		second_value: 2400,
+		third_value: 2400,
+	},
+	{
+		name: "February",
+		value: 3000,
+		second_value: 1398,
+		third_value: 2210,
+	},
+	{
+		name: "March",
+		value: 2000,
+		second_value: 9800,
+		third_value: 2290,
+	},
+	{
+		name: "April",
+		value: 2780,
+		second_value: 3908,
+		third_value: 2000,
+	},
+	{
+		name: "May",
+		value: 1890,
+		second_value: 4800,
+		third_value: 2181,
+	},
+	{
+		name: "June",
+		value: 2390,
+		second_value: 3800,
+		third_value: 2500,
+	},
+	{
+		name: "July",
+		value: 3490,
+		second_value: 4300,
+		third_value: 2100,
+	},
 ];
+
+const pieData = [
+	{ name: "Group A", value: 400 },
+	{ name: "Group B", value: 300 },
+	{ name: "Group C", value: 300 },
+	{ name: "Group D", value: 200 },
+];
+
+const pieColors = ["#ff10ee"];
 
 export default function Charts() {
 	const { theme, setTheme } = useTheme();
@@ -87,7 +97,7 @@ export default function Charts() {
 					areaStroke={"#5050ff"}
 					valueName="Money"
 					showYAxis
-                    endStopOpacity={0.6}
+					endStopOpacity={0.6}
 				/>
 				<h1>Stacked Area Chart</h1>
 				<CStackedAreaChart
@@ -114,7 +124,7 @@ export default function Charts() {
 						},
 					]}
 					colorTheme="#2020ff"
-                    endStopOpacity={0.6}
+					endStopOpacity={0.6}
 				/>
 				<h1>Bar Chart</h1>
 				<CBarChart
@@ -123,7 +133,7 @@ export default function Charts() {
 					areaStroke={"#ff10ee"}
 					valueName="Money"
 					showYAxis
-                    endStopOpacity={0.6}
+					endStopOpacity={0.6}
 				/>
 				<h1>Multiple Bar Chart</h1>
 				<CMultipleBarChart
@@ -144,17 +154,27 @@ export default function Charts() {
 						},
 					]}
 					colorTheme="#2020ff"
-                    endStopOpacity={0.6}
+					endStopOpacity={0.6}
 				/>
-                <h1>Horizontal Bar Chart</h1>
+				<h1>Horizontal Bar Chart</h1>
 				<CHorizontalBarChart
 					data={ACdata}
 					colorTheme={"#ff20ee"}
 					areaStroke={"#ff10ee"}
 					valueName="Money"
-                    
-                    endStopOpacity={0.6}
+					endStopOpacity={0.6}
 				/>
+				<h1>Pie Chart (Round and flat)</h1>
+				<div className="flex flex-row space-x-10 w-full h-fit">
+					{" "}
+					<CPieChart data={pieData} colors={pieColors} showTooltip />
+					<CPieChart
+						data={pieData}
+						colors={pieColors}
+						showTooltip
+						endAngle={180}
+					/>
+				</div>
 			</div>
 		</div>
 	);
