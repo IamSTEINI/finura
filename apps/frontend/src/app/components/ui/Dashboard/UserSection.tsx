@@ -2,14 +2,19 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { LogOut, Moon, Settings, Sun, User } from "lucide-react";
+import { Languages, LogOut, Moon, Settings, Sun, User } from "lucide-react";
 import { useTheme } from "next-themes";
+import { getAllLocales, useLocale } from "@/context/LocaleContext";
+import { useDevMode } from "@/context/DeveloperContext";
+import DropDown from "../DropDown";
 
 interface DashboardUserProps {
 	isCollapsed: boolean;
 }
 
 const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
+	const { t, changeLocale, locale } = useLocale();
+	const { devMode } = useDevMode();
 	const [open, setOpen] = useState(false);
 	const userSectionRef = useRef<HTMLDivElement>(null);
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -67,7 +72,9 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 									John Doe
 								</p>
 								<p className="text-xs dashboard-text opacity-75">
-									Administrator
+									{t(
+										"language.dashboard_sidebar_role_adminstrator"
+									)}
 								</p>
 							</motion.div>
 						)}
@@ -99,26 +106,51 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 								</span>
 							</div>
 						</div>
-						<button className="btn-text-only-l my-0.5 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-60 hover:opacity-100 transition-all ease-in">
+						<button className="btn-text-only-l my-0.5 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
 							<Settings size={18} opacity={0.6} />
-							Settings
+							{t("language.dashboard_sidebar_menu_settings")}
 						</button>
-						<button className="btn-text-only-l my-0.5 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-60 hover:opacity-100 transition-all ease-in">
+						<button className="btn-text-only-l my-0.5 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
 							<User size={18} opacity={0.6} />
-							Account
+							{t("language.dashboard_sidebar_menu_account")}
 						</button>
-						<button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="btn-text-only-l mb-1 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-60 hover:opacity-100 transition-all ease-in">
+						<button
+							onClick={() =>
+								setTheme(theme === "dark" ? "light" : "dark")
+							}
+							className="btn-text-only-l mb-1 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
 							{theme === "dark" ? (
 								<Sun size={18} opacity={0.6} />
 							) : (
 								<Moon size={18} opacity={0.6} />
 							)}
-							Switch to {theme === "dark" ? "Light" : "Dark"}
+							{t("language.dashboard_sidebar_menu_switchmode")}{" "}
+							{theme === "dark"
+								? t(
+										"language.dashboard_sidebar_menu_switch_light"
+								  )
+								: t(
+										"language.dashboard_sidebar_menu_switch_dark"
+								  )}
 						</button>
+						{devMode && (
+							<div className="flex flex-row items-center justify-start z-[999] gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
+								<Languages size={18} opacity={0.6} className="ml-2.5"/>
+								<DropDown
+									data={getAllLocales()}
+									onChange={(value) => changeLocale(value)}
+									searchable={true}
+									placeholder="Select a language"
+									className="w-full h-10 mb-1"
+									defaultValue={getAllLocales()[0]?.value}
+									selected={locale}
+								/>
+							</div>
+						)}
 						<div className="border-t sidebar-border-color flex flex-col">
-							<button className="btn-text-only-l mt-1 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-60 hover:opacity-100 transition-all ease-in">
+							<button className="btn-text-only-l mt-1 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
 								<LogOut size={18} opacity={0.6} />
-								Log out
+								{t("language.dashboard_sidebar_menu_logout")}
 							</button>
 						</div>
 					</motion.div>

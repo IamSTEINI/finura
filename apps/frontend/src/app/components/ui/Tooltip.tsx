@@ -14,7 +14,7 @@ const ToolTip: React.FC<ToolTipProps> = ({
 			case "top":
 				return "translate-y-0 mb-2 origin-bottom group-hover:-translate-y-8";
 			case "right":
-				return "translate-x-0 ml-2 origin-left group-hover:translate-x-15";
+				return "translate-x-0 ml-2 mt-2.5 origin-left group-hover:translate-x-15";
 			case "bottom":
 				return "translate-y-0 translate-y-[100%] mt-2 origin-top group-hover:translate-y-5";
 			case "left":

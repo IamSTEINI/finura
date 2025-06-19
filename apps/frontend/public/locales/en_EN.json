@@ -1,0 +1,36 @@
+{
+	"language": {
+		"dashboard_sidebar_dashboard": "Dashboard",
+		"dashboard_sidebar_invoices": "Invoices",
+		"dashboard_sidebar_customers": "Customers",
+		"dashboard_sidebar_receipts": "Receipts",
+		"dashboard_sidebar_appointments": "Appointments",
+		"dashboard_sidebar_analytics": "Analytics",
+		"dashboard_sidebar_products": "Products",
+		"dashboard_sidebar_export": "Export",
+		"dashboard_sidebar_role_adminstrator": "Adminstrator",
+		"dashboard_sidebar_role_accountant": "Accountant",
+		"dashboard_sidebar_role_sales": "Sales",
+		"dashboard_sidebar_role_viewer": "Viewer",
+		"dashboard_sidebar_menu_settings": "Settings",
+		"dashboard_sidebar_menu_account": "Account",
+		"dashboard_sidebar_menu_switchmode": "Switch to",
+		"dashboard_sidebar_menu_switch_dark": "Dark",
+		"dashboard_sidebar_menu_switch_light": "Light",
+		"dashboard_sidebar_menu_logout": "Log out",
+		"dashboard_sidebar_workspace_placeholder": "Select workspace",
+		"dashboard_sidebar_chats": "Chats",
+
+		"dashboard_header_search_placeholder": "Search...",
+		"dashboard_header_notifications": "Notifications",
+        "dashboard_header_no_notifications": "No notifications to see here.",
+
+        "message_welcome": "Welcome, %username",
+        "select_language": "Select your language",
+
+        "time_just_now": "just now",
+        "time_minutes_ago": "%count min ago",
+        "time_hours_ago": "%count hour ago",
+        "time_days_ago": "%count day ago"
+	}
+}

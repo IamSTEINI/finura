@@ -1,10 +1,22 @@
-import { BarChart3, Home, Settings, Users } from "lucide-react";
+import {
+	Calendar,
+	ChartArea,
+	Contact,
+	FileText,
+	Home,
+	Package,
+	Receipt,
+	Send,
+	Upload,
+} from "lucide-react";
 import DropDown from "../DropDown";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import DashboardUser from "./UserSection";
 import ToolTip from "../Tooltip";
+import { useLocale } from "@/context/LocaleContext";
+import { useDevMode } from "@/context/DeveloperContext";
 
 interface SidebarProps {
 	isCollapsed: boolean;
@@ -18,13 +30,18 @@ export const Sidebar = ({
 	currentSelectedTab = "Dashboard",
 	onChange,
 }: SidebarProps) => {
+	const { t } = useLocale();
 	const menuItems = [
-		{ icon: Home, label: "Dashboard" },
-		{ icon: Users, label: "Users" },
-		{ icon: BarChart3, label: "Analytics" },
-		{ icon: Settings, label: "Settings" },
+		{ icon: Home, label: t("language.dashboard_sidebar_dashboard") },
+		{ icon: FileText, label: t("language.dashboard_sidebar_invoices") },
+		{ icon: Contact, label: t("language.dashboard_sidebar_customers") },
+		{ icon: Receipt, label: t("language.dashboard_sidebar_receipts") },
+		{ icon: Send, label: t("language.dashboard_sidebar_chats") },
+		{ icon: Calendar, label: t("language.dashboard_sidebar_appointments") },
+		{ icon: ChartArea, label: t("language.dashboard_sidebar_analytics") },
+		{ icon: Package, label: t("language.dashboard_sidebar_products") },
+		{ icon: Upload, label: t("language.dashboard_sidebar_export") },
 	];
-
 	const [selectedWorkSpace, setSelectedWorkspace] = useState("");
 
 	return (
@@ -61,6 +78,7 @@ export const Sidebar = ({
 									selected={selectedWorkSpace}
 									onChange={setSelectedWorkspace}
 									searchable={false}
+									placeholder="Select workspace"
 									className="w-full h-8 min-h-8 max-h-8 dropdown-bare"
 									buttonClassName="dropdown-bare"
 									listClassName=""
@@ -80,7 +98,9 @@ export const Sidebar = ({
 						return (
 							<li key={index}>
 								{isCollapsed ? (
-									<ToolTip tooltip={item.label} direction="right">
+									<ToolTip
+										tooltip={item.label}
+										direction="right">
 										<button
 											onClick={() =>
 												onChange?.(item.label)
@@ -130,7 +150,11 @@ export const Sidebar = ({
 										onClick={() => onChange?.(item.label)}
 										className={`
                                         w-full flex items-center dropdown-bare space-x-3 px-3 py-2 rounded-lg
-                                        ${isActive ? "font-semibold" : "font-md"}
+                                        ${
+											isActive
+												? "font-semibold"
+												: "font-md"
+										}
                                         ${
 											isCollapsed
 												? "justify-center"

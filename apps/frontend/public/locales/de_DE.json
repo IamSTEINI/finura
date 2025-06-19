@@ -1,0 +1,36 @@
+{
+	"language": {
+		"dashboard_sidebar_dashboard": "Übersicht",
+		"dashboard_sidebar_invoices": "Rechnungen",
+		"dashboard_sidebar_customers": "Kunden",
+		"dashboard_sidebar_receipts": "Belege",
+		"dashboard_sidebar_appointments": "Termine",
+		"dashboard_sidebar_analytics": "Analysen",
+		"dashboard_sidebar_products": "Produkte",
+		"dashboard_sidebar_export": "Export",
+		"dashboard_sidebar_role_adminstrator": "Adminstrator",
+		"dashboard_sidebar_role_accountant": "Buchhalter",
+		"dashboard_sidebar_role_sales": "Vertrieb",
+		"dashboard_sidebar_role_viewer": "Leser",
+		"dashboard_sidebar_menu_settings": "Einstellungen",
+		"dashboard_sidebar_menu_account": "Konto",
+		"dashboard_sidebar_menu_switchmode": "Wechsle zu",
+		"dashboard_sidebar_menu_switch_dark": "Dunkel",
+		"dashboard_sidebar_menu_switch_light": "Hell",
+		"dashboard_sidebar_menu_logout": "Ausloggen",
+		"dashboard_sidebar_workspace_placeholder": "Wähle Arbeitsplatz",
+		"dashboard_sidebar_chats": "Nachrichten",
+
+        "dashboard_header_search_placeholder": "Suche...",
+        "dashboard_header_notifications": "Nachrichten",
+        "dashboard_header_no_notifications": "Du hast keine Nachrichten.",
+
+        "message_welcome": "Wilkommen, %username",
+        "select_language": "Wähle deine Sprache",
+
+        "time_just_now": "gerade eben",
+        "time_minutes_ago": "vor %count Min.",
+        "time_hours_ago": "vor %count Std.",
+        "time_days_ago": "vor %count Tag(en)"
+	}
+}
