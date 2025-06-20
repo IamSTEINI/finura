@@ -1,4 +1,4 @@
-# finura
+# Finura
 
 Structure. Elegance. Efficiency.
 
