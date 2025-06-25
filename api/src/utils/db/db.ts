@@ -47,7 +47,6 @@ export async function testConnection() {
 				errorMessage = "Database does not exist";
 			}
 		}
-
 		console.error(`Database connection error: ${errorMessage}`, error);
 
 		return {

@@ -99,6 +99,7 @@ type Claims struct {
 type UserSession struct {
 	UserID    string    `json:"user_id"`
 	Username  string    `json:"username"`
+	Roles     []string  `json:"roles"`
 	LoginTime time.Time `json:"login_time"`
 	LastSeen  time.Time `json:"last_seen"`
 	IPAddress string    `json:"ip_address"`
@@ -149,6 +150,7 @@ func main() {
 		LoginTime: time.Now(),
 		LastSeen:  time.Now(),
 		IPAddress: "127.0.0.1",
+		Roles:     []string{"TEST"},
 	}
 
 	err = server.sessionManager.CreateSession(context.Background(), testSessionID, testSession, server.config.SessionTTL)
@@ -538,8 +540,9 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var data struct {
-		UserID   string `json:"user_id"`
-		Username string `json:"username"`
+		UserID   string   `json:"user_id"`
+		Username string   `json:"username"`
+		Roles    []string `json:"roles"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
@@ -552,6 +555,20 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if len(data.Roles) == 0 {
+		http.Error(w, "roles are required", http.StatusBadRequest)
+		return
+	}
+
+	sessionKey := fmt.Sprintf("user_session:%s", data.UserID)
+	ctx := r.Context()
+
+	oldSessionID, err := s.rdb.Get(ctx, sessionKey).Result()
+	if err == nil && oldSessionID != "" {
+		_ = s.sessionManager.DeleteSession(ctx, oldSessionID)
+		log.Printf("[SESSION DELETED] %s", oldSessionID)
+	}
+
 	sessionID := fmt.Sprintf("%s_%d", data.UserID, time.Now().UnixNano())
 
 	session := &UserSession{
@@ -560,14 +577,16 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 		LoginTime: time.Now(),
 		LastSeen:  time.Now(),
 		IPAddress: ip,
+		Roles:     data.Roles,
 	}
 
-	ctx := r.Context()
 	if err := s.sessionManager.CreateSession(ctx, sessionID, session, s.config.SessionTTL); err != nil {
 		log.Printf("[ERROR] Failed to create session for user %s: %v", data.UserID, err)
 		http.Error(w, "Failed to create session", http.StatusInternalServerError)
 		return
 	}
+
+	_ = s.rdb.Set(ctx, sessionKey, sessionID, s.config.SessionTTL).Err()
 
 	token, err := s.createJWT(data.UserID, data.Username, sessionID, s.config.SessionTTL)
 	if err != nil {
@@ -589,6 +608,16 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) Logout(w http.ResponseWriter, r *http.Request) {
+	ip := getClientIP(r)
+	allowedIPs := map[string]bool{
+		"127.0.0.1": true,
+		"::1":       true,
+		"[::1]":     true,
+	}
+	if !allowedIPs[ip] {
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
 	sessionID, ok := r.Context().Value("session_id").(string)
 	if !ok {
 		http.Error(w, "Session context missing", http.StatusInternalServerError)

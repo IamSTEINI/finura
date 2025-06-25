@@ -10,7 +10,8 @@ export const loggingHandler = (
 
 	res.on("finish", () => {
 		console.log(
-			`[${timestamp}] ${req.method} ${req.url} - ${res.statusCode} - ${ip}`
+			`[${timestamp}] ${req.method} ${req.url} - ${res.statusCode} - ${ip}`,
+			" - B", req.body || "no body"
 		);
 	});
 
