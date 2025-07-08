@@ -16,7 +16,6 @@ import Image from "next/image";
 import DashboardUser from "./UserSection";
 import ToolTip from "../Tooltip";
 import { useLocale } from "@/context/LocaleContext";
-import { useDevMode } from "@/context/DeveloperContext";
 
 interface SidebarProps {
 	isCollapsed: boolean;

@@ -8,10 +8,11 @@ import ColorPicker from "@/app/components/ui/ColorPicker/ColorPicker";
 import DropDown from "@/app/components/ui/DropDown";
 import Progressbar from "@/app/components/ui/Progressbar";
 import Seperator from "@/app/components/ui/Seperator";
+import SimpleStat from "@/app/components/ui/SimpleStatComponent";
 import Switch from "@/app/components/ui/Switch";
 import ToolTip from "@/app/components/ui/Tooltip";
 import CountUp from "@/app/components/utils/countUp";
-import { Eye, Palette } from "lucide-react";
+import { ArrowUpCircle, Eye, Palette } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -219,7 +220,10 @@ const PlaygroundUI: React.FC = () => {
 				</p>
 				<Seperator text="OR LOG IN WITH" />
 			</Card>
-
+			<div className="flex flex-row space-x-2 items-center w-full">
+				<SimpleStat icon={<ArrowUpCircle/>} title="Data" data={125}/>
+				<SimpleStat icon={<ArrowUpCircle/>} className="w-full" title="Data" data={125} colorTheme="#c55cff"/>
+			</div>
 		</div>
 	);
 };

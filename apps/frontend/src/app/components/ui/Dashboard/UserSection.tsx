@@ -2,11 +2,12 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Languages, LogOut, Moon, Settings, Sun, User } from "lucide-react";
+import { Languages, LogOut, Moon, Settings, Sun, TestTube, User } from "lucide-react";
 import { useTheme } from "next-themes";
 import { getAllLocales, useLocale } from "@/context/LocaleContext";
 import { useDevMode } from "@/context/DeveloperContext";
 import DropDown from "../DropDown";
+import { useNotification } from "@/context/NotificationContext";
 
 interface DashboardUserProps {
 	isCollapsed: boolean;
@@ -20,6 +21,7 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const { theme, setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
+	const { addNotification } = useNotification();
 
 	useEffect(() => {
 		setMounted(true);
@@ -134,17 +136,35 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 								  )}
 						</button>
 						{devMode && (
-							<div className="flex flex-row items-center justify-start z-[999] gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
-								<Languages size={18} opacity={0.6} className="ml-2.5"/>
-								<DropDown
-									data={getAllLocales()}
-									onChange={(value) => changeLocale(value)}
-									searchable={true}
-									placeholder="Select a language"
-									className="w-full h-10 mb-1"
-									defaultValue={getAllLocales()[0]?.value}
-									selected={locale}
-								/>
+							<div className="border rounded-md border-red-500 w-full">
+								<div className="flex flex-row items-center justify-start z-[999] gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
+									<Languages
+										size={18}
+										opacity={0.6}
+										className="ml-2.5"
+									/>
+									<DropDown
+										data={getAllLocales()}
+										onChange={(value) =>
+											changeLocale(value)
+										}
+										searchable={true}
+										placeholder="Select a language"
+										className="w-full h-10 mb-1"
+										defaultValue={getAllLocales()[0]?.value}
+										selected={locale}
+									/>
+								</div>
+								<button onClick={()=>addNotification("Hey", "Title")} className="btn-text-only-l my-0.5 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
+									<TestTube
+										size={18}
+										opacity={0.6}
+										className="ml-2.5"
+									/>
+									<div className="w-full text-start items-center flex justify-start">
+										<span>Test notification</span>
+									</div>
+								</button>
 							</div>
 						)}
 						<div className="border-t sidebar-border-color flex flex-col">

@@ -183,6 +183,7 @@ func publicRouter(s *Server) http.Handler {
 	r := chi.NewRouter()
 	// r.HandleFunc("/*", s.ApiHandler)
 	r.Post("/login", s.Login)
+	r.Post("/refresh", s.RefreshSession)
 	return r
 }
 
@@ -526,6 +527,82 @@ func (s *Server) createJWT(userID, username, sessionID string, ttl time.Duration
 	return token.SignedString(s.jwtSecret)
 }
 
+func (s *Server) createRefreshToken(userID, username, sessionID string, ttl time.Duration) (string, error) {
+	claims := jwt.MapClaims{
+		"user_id":    userID,
+		"username":   username,
+		"session_id": sessionID,
+		"type":       "refresh",
+		"exp":        time.Now().Add(ttl).Unix(),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString([]byte(s.config.JWTSecret))
+}
+
+func (s *Server) RefreshSession(w http.ResponseWriter, r *http.Request) {
+	ip := getClientIP(r)
+
+	allowedIPs := map[string]bool{
+		"127.0.0.1": true,
+		"::1":       true,
+		"[::1]":     true,
+	}
+	if !allowedIPs[ip] {
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+	authHeader := r.Header.Get("Authorization")
+	if authHeader == "" {
+		http.Error(w, "Missing Authorization header", http.StatusUnauthorized)
+		return
+	}
+
+	refreshTokenStr, err := extractBearerToken(authHeader)
+	if err != nil {
+		http.Error(w, "Invalid Authorization header format", http.StatusUnauthorized)
+		return
+	}
+
+	token, err := jwt.Parse(refreshTokenStr, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return s.jwtSecret, nil
+	})
+	if err != nil || !token.Valid {
+		http.Error(w, "Invalid or expired refresh token", http.StatusUnauthorized)
+		return
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok || claims["type"] != "refresh" {
+		http.Error(w, "Invalid refresh token", http.StatusUnauthorized)
+		return
+	}
+
+	userID, _ := claims["user_id"].(string)
+	username, _ := claims["username"].(string)
+	sessionID, _ := claims["session_id"].(string)
+
+	accessToken, err := s.createJWT(userID, username, sessionID, s.config.SessionTTL)
+	if err != nil {
+		http.Error(w, "Failed to create access token", http.StatusInternalServerError)
+		return
+	}
+
+	log.Printf("[SESSION REFRESH] User %s (%s) refreshed session successfully", userID, username)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"token":      accessToken,
+		"session_id": sessionID,
+		"expires_in": int(s.config.SessionTTL.Seconds()),
+		"user_id":    userID,
+		"username":   username,
+	})
+}
+
 func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 	ip := getClientIP(r)
 
@@ -595,15 +672,23 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	refreshTokenTTL := time.Hour * 24 * 30
+	refreshToken, err := s.createRefreshToken(data.UserID, data.Username, sessionID, refreshTokenTTL)
+	if err != nil {
+		log.Printf("[ERROR] Failed to create refresh token for user %s: %v", data.UserID, err)
+		http.Error(w, "Failed to create refresh token", http.StatusInternalServerError)
+		return
+	}
 	log.Printf("[+] User %s (%s) logged in successfully from IP %s", data.UserID, data.Username, ip)
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]interface{}{
-		"token":      token,
-		"session_id": sessionID,
-		"expires_in": int(s.config.SessionTTL.Seconds()),
-		"user_id":    data.UserID,
-		"username":   data.Username,
+		"token":         token,
+		"refresh_token": refreshToken,
+		"session_id":    sessionID,
+		"expires_in":    int(s.config.SessionTTL.Seconds()),
+		"user_id":       data.UserID,
+		"username":      data.Username,
 	})
 }
 
