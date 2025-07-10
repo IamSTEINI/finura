@@ -217,8 +217,10 @@ func newReverseProxy(target string) *reverseProxy {
 		path := chi.URLParam(req, "*")
 		req.URL.Scheme = tgt.Scheme
 		req.URL.Host = tgt.Host
-		req.URL.Path = joinPath(tgt.Path, path)
+		req.URL.Path = joinPath(tgt.Path, "/api/"+path)
 		req.Host = tgt.Host
+
+		log.Printf("[PROXY] Forwarding request to: %s", req.URL.String())
 	}
 	transport := &http.Transport{
 		MaxIdleConns:    100,

@@ -122,7 +122,7 @@ export const NotificationProvider = ({ children }: Props) => {
                             onClick={() => dismissNotification(n.id)}
                             onMouseEnter={() => setHoveredId(n.id)}
                             onMouseLeave={() => setHoveredId(null)}
-                            className="card cursor-pointer min-w-[200px] overflow-hidden"
+                            className="card cursor-pointer min-w-[300px] overflow-hidden"
                             initial={{ opacity: 0, x: 50, scale: 0.9 }}
                             animate={{ opacity: 1, x: 0, scale: 1 }}
                             exit={{ opacity: 0, x: 100, scale: 0.95 }}
