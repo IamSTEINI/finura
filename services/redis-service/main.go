@@ -159,6 +159,8 @@ func main() {
 	} else {
 		testToken, _ := server.createJWT("0", "TestUser", testSessionID, 24*time.Hour)
 		log.Printf("[DEV] Test token: %s", testToken)
+		testRefreshToken, _ := server.createRefreshToken("0", "TestUser", testSessionID, 30*24*time.Hour)
+		log.Printf("[DEV] Test refresh_token: %s", testRefreshToken)
 		log.Printf("[DEV] Test sessionID: %s", testSessionID)
 	}
 
@@ -191,7 +193,7 @@ func authRouter(s *Server) http.Handler {
 	r := chi.NewRouter()
 	r.Use(s.AuthMiddleware)
 	r.Post("/logout", s.Logout)
-
+	r.Post("/session/get", s.GetSession)
 	proxy := newReverseProxy(s.config.ProxyTargetURL)
 	r.Handle("/*", proxy)
 	return r
@@ -403,6 +405,12 @@ func getClientIP(r *http.Request) string {
 func (s *Server) RateLimitMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ip := getClientIP(r)
+
+		if ip == "127.0.0.1" || ip == "::1" || ip == "[::1]" {
+			next.ServeHTTP(w, r)
+			return
+		}
+
 		ctx := r.Context()
 
 		blocked, err := s.rateLimiter.IsBlocked(ctx, ip)
@@ -754,6 +762,88 @@ func (s *Server) ApiHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Printf("[REDIS-MIDDLEWARE] User %s accessed %s %s", claims.UserID, r.Method, path)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func (s *Server) GetSession(w http.ResponseWriter, r *http.Request) {
+	ip := getClientIP(r)
+
+	allowedIPs := map[string]bool{
+		"127.0.0.1": true,
+		"::1":       true,
+		"[::1]":     true,
+	}
+	if !allowedIPs[ip] {
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+	authHeader := r.Header.Get("Authorization")
+	if authHeader == "" {
+		http.Error(w, "Missing Authorization header", http.StatusUnauthorized)
+		return
+	}
+
+	requestData := struct {
+		Token string
+	}{}
+
+	var err error
+	requestData.Token, err = extractBearerToken(authHeader)
+	if err != nil {
+		http.Error(w, "Invalid Authorization header format", http.StatusUnauthorized)
+		return
+	}
+
+	if requestData.Token == "" {
+		http.Error(w, "Token is required", http.StatusBadRequest)
+		return
+	}
+
+	claims := &Claims{}
+	token, err := jwt.ParseWithClaims(requestData.Token, claims, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return s.jwtSecret, nil
+	})
+
+	if err != nil || !token.Valid {
+		log.Printf("[GET_SESSION] Invalid/expired JWT from IP %s: %v", ip, err)
+		http.Error(w, "Invalid or expired token", http.StatusUnauthorized)
+		return
+	}
+
+	ctx := r.Context()
+	session, err := s.sessionManager.GetSession(ctx, claims.SessionID)
+	if err != nil {
+		log.Printf("[GET_SESSION] Session not found for user %s from IP %s: %v", claims.UserID, ip, err)
+		http.Error(w, "Session not found", http.StatusNotFound)
+		return
+	}
+
+	if session.UserID != claims.UserID {
+		log.Printf("[GET_SESSION] Session mismatch for user %s from IP %s", claims.UserID, ip)
+		http.Error(w, "Session validation failed", http.StatusUnauthorized)
+		return
+	}
+
+	if err := s.sessionManager.UpdateSession(ctx, claims.SessionID, s.config.SessionTTL); err != nil {
+		log.Printf("[WARN] Failed to update session for user %s: %v", claims.UserID, err)
+	}
+
+	log.Printf("[GET_SESSION] Session retrieved successfully for user %s (%s) from IP %s", claims.UserID, claims.Username, ip)
+
+	response := map[string]interface{}{
+		"success":    true,
+		"user_id":    session.UserID,
+		"username":   session.Username,
+		"roles":      session.Roles,
+		"login_time": session.LoginTime,
+		"last_seen":  session.LastSeen,
+		"ip_address": session.IPAddress,
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)

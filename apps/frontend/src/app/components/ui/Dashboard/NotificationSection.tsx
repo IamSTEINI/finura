@@ -80,7 +80,7 @@ const NotificationSection: React.FC<NotificationSectionProps> = ({
 							<div className="flex flex-row justify-between items-center pb-1">
 								<h3>
 									{t(
-										"language.dashboard_header_notifications"
+										"dashboard.header_notifications"
 									)}
 								</h3>
 								<span>{notifications.length}</span>
@@ -90,7 +90,7 @@ const NotificationSection: React.FC<NotificationSectionProps> = ({
 								{notifications.length === 0 ? (
 									<div className="py-2 pb-0 text-center text-gray-500">
 										{t(
-											"language.dashboard_header_no_notifications"
+											"dashboard.header_no_notifications"
 										)}
 									</div>
 								) : (

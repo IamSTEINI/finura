@@ -1,6 +1,7 @@
 import { Router, RequestHandler } from "express";
 import express from "express";
 import { checkUserInDB } from "../../utils/auth/checkUserInDB";
+import { fetchSession } from "../../utils/auth/fetchSession";
 
 const authmeRouter = Router();
 authmeRouter.use(express.json());
@@ -15,24 +16,32 @@ const meHandler: RequestHandler = async (req, res) => {
 		}
 
 		//DEBUG
-		const token = req.headers.authorization.split(' ')[1];
-		console.log("RECEIVED TOKEN: ", token)
+		const token = req.headers.authorization.split(" ")[1];
+		console.log("RECEIVED TOKEN: ", token);
 
-		const mockUserSession = {
-			id: "user123",
-			name: "John Doe",
-			email: "john@example.com",
-			roles: ["user"],
-			permissions: ["read:data"],
-			lastLogin: new Date().toISOString(),
-		};
+		// const mockUserSession = {
+		// 	id: "user123",
+		// 	name: "John Doe",
+		// 	email: "john@example.com",
+		// 	roles: ["user"],
+		// 	permissions: ["read:data"],
+		// 	lastLogin: new Date().toISOString(),
+		// };
+
+		// res.status(200).json({
+		// 	success: true,
+		// 	data: mockUserSession,
+		// });
+
+		// Request redis and return session if available, otherwise return error
+		// http://localhost:8001/api/auth/me
+		const fetched_session = await fetchSession(token);
+		console.log(fetched_session);
 
 		res.status(200).json({
 			success: true,
-			data: mockUserSession,
+			session: fetched_session,
 		});
-		// Request redis and return session if available, otherwise return error
-		// http://localhost:8001/api/auth/me
 	} catch (error) {
 		res.status(401).json({
 			success: false,

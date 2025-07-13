@@ -31,15 +31,15 @@ export const Sidebar = ({
 }: SidebarProps) => {
 	const { t } = useLocale();
 	const menuItems = [
-		{ icon: Home, label: t("language.dashboard_sidebar_dashboard") },
-		{ icon: FileText, label: t("language.dashboard_sidebar_invoices") },
-		{ icon: Contact, label: t("language.dashboard_sidebar_customers") },
-		{ icon: Receipt, label: t("language.dashboard_sidebar_receipts") },
-		{ icon: Send, label: t("language.dashboard_sidebar_chats") },
-		{ icon: Calendar, label: t("language.dashboard_sidebar_appointments") },
-		{ icon: ChartArea, label: t("language.dashboard_sidebar_analytics") },
-		{ icon: Package, label: t("language.dashboard_sidebar_products") },
-		{ icon: Upload, label: t("language.dashboard_sidebar_export") },
+		{ icon: Home, label: t("dashboard.sidebar_dashboard") },
+		{ icon: FileText, label: t("dashboard.sidebar_invoices") },
+		{ icon: Contact, label: t("dashboard.sidebar_customers") },
+		{ icon: Receipt, label: t("dashboard.sidebar_receipts") },
+		{ icon: Send, label: t("dashboard.sidebar_chats") },
+		{ icon: Calendar, label: t("dashboard.sidebar_appointments") },
+		{ icon: ChartArea, label: t("dashboard.sidebar_analytics") },
+		{ icon: Package, label: t("dashboard.sidebar_products") },
+		{ icon: Upload, label: t("dashboard.sidebar_export") },
 	];
 	const [selectedWorkSpace, setSelectedWorkspace] = useState("");
 

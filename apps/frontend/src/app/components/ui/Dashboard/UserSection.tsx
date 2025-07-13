@@ -75,7 +75,7 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 								</p>
 								<p className="text-xs dashboard-text opacity-75">
 									{t(
-										"language.dashboard_sidebar_role_adminstrator"
+										"dashboard.sidebar_role_adminstrator"
 									)}
 								</p>
 							</motion.div>
@@ -110,11 +110,11 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 						</div>
 						<button className="btn-text-only-l my-0.5 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
 							<Settings size={18} opacity={0.6} />
-							{t("language.dashboard_sidebar_menu_settings")}
+							{t("dashboard.sidebar_menu_settings")}
 						</button>
 						<button className="btn-text-only-l my-0.5 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
 							<User size={18} opacity={0.6} />
-							{t("language.dashboard_sidebar_menu_account")}
+							{t("dashboard.sidebar_menu_account")}
 						</button>
 						<button
 							onClick={() =>
@@ -126,13 +126,13 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 							) : (
 								<Moon size={18} opacity={0.6} />
 							)}
-							{t("language.dashboard_sidebar_menu_switchmode")}{" "}
+							{t("dashboard.sidebar_menu_switchmode")}{" "}
 							{theme === "dark"
 								? t(
-										"language.dashboard_sidebar_menu_switch_light"
+										"dashboard.sidebar_menu_switch_light"
 								  )
 								: t(
-										"language.dashboard_sidebar_menu_switch_dark"
+										"dashboard.sidebar_menu_switch_dark"
 								  )}
 						</button>
 						{devMode && (
@@ -149,7 +149,7 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 											changeLocale(value)
 										}
 										searchable={true}
-										placeholder="Select a language"
+										placeholder={t("general.select_language")}
 										className="w-full h-10 mb-1"
 										defaultValue={getAllLocales()[0]?.value}
 										selected={locale}
@@ -170,7 +170,7 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 						<div className="border-t sidebar-border-color flex flex-col">
 							<button className="btn-text-only-l mt-1 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
 								<LogOut size={18} opacity={0.6} />
-								{t("language.dashboard_sidebar_menu_logout")}
+								{t("dashboard.sidebar_menu_logout")}
 							</button>
 						</div>
 					</motion.div>

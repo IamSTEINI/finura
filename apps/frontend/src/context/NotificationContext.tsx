@@ -122,14 +122,14 @@ export const NotificationProvider = ({ children }: Props) => {
                             onClick={() => dismissNotification(n.id)}
                             onMouseEnter={() => setHoveredId(n.id)}
                             onMouseLeave={() => setHoveredId(null)}
-                            className="card cursor-pointer min-w-[300px] overflow-hidden"
+                            className="card cursor-pointer min-w-[300px] max-w-[500px] overflow-hidden"
                             initial={{ opacity: 0, x: 50, scale: 0.9 }}
                             animate={{ opacity: 1, x: 0, scale: 1 }}
                             exit={{ opacity: 0, x: 100, scale: 0.95 }}
                             transition={{ duration: 0.1 }}
                             layout>
                             {n.title && (
-                                <div className="font-semibold">{n.title}</div>
+                                <div className="font-semibold truncate max-w-[70%]">{n.title}</div>
                             )}
                             <div>{n.message}</div>
                             <div className="relative w-full h-fit pt-1 flex justify-center items-center">

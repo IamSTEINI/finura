@@ -67,3 +67,34 @@ label {
     margin-bottom: -10px;
     margin-left: 5px;
 }
+
+a {
+	position: relative;
+	user-select: none;
+	text-decoration: none;
+	color: inherit;
+	opacity: 0.75;
+	cursor: pointer;
+
+	&::after {
+		content: "";
+		position: absolute;
+		left: 50%;
+		bottom: 0;
+		width: 0;
+		height: 1px;
+		background-color: currentColor;
+		transition: all 150ms ease;
+		transform: translateX(-50%);
+	}
+
+  &:hover {
+		opacity: 1;
+  }
+
+	&:hover::after {
+		width: 100%;
+		left: 0;
+		transform: translateX(0);
+	}
+}

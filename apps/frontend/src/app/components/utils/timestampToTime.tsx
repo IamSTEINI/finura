@@ -11,12 +11,12 @@ export const timestampToTime = (
 	const secondsAgo = Math.floor((now - timestampMs) / 1000);
 
 	if (secondsAgo < 60) {
-		return t("language.time_just_now");
+		return t("time.just_now");
 	}
 
 	const minutesAgo = Math.floor(secondsAgo / 60);
 	if (minutesAgo < 60) {
-		return t("language.time_minutes_ago").replace(
+		return t("time.minutes_ago").replace(
 			"%count",
 			minutesAgo.toString()
 		);
@@ -24,7 +24,7 @@ export const timestampToTime = (
 
 	const hoursAgo = Math.floor(minutesAgo / 60);
 	if (hoursAgo < 24) {
-		return t("language.time_hours_ago").replace(
+		return t("time.hours_ago").replace(
 			"%count",
 			hoursAgo.toString()
 		);
@@ -32,7 +32,7 @@ export const timestampToTime = (
 
 	const daysAgo = Math.floor(hoursAgo / 24);
 	if (daysAgo < 7) {
-		return t("language.time_days_ago").replace(
+		return t("time.days_ago").replace(
 			"%count",
 			daysAgo.toString()
 		);

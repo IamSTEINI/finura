@@ -27,11 +27,11 @@ export default function DashboardPlayground() {
 		}
 
 		switch (tab) {
-			case t("language.dashboard_sidebar_dashboard"):
+			case t("dashboard.sidebar_dashboard"):
 				return <DashboardComponent />;
-			case t("language.dashboard_sidebar_analytics"):
+			case t("dashboard.sidebar_analytics"):
 				return <AnalyticsComponent />;
-			case t("language.dashboard_sidebar_products"):
+			case t("dashboard.sidebar_products"):
 				return <ProductsComponent />;
 			default:
 				return <DashboardComponent />;

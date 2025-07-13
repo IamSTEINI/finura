@@ -49,7 +49,7 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, onChange }) => {
 					<div
 						key={tab}
 						className="relative h-7 w-22 flex justify-center items-center">
-						<a
+						<span
 							onClick={() => setSelectedTab(tab)}
 							className={`text-xs transition-colors p-5 cursor-pointer ${
 								selectedTab === tab
@@ -57,7 +57,7 @@ const ColorPanel: React.FC<ColorPanelProps> = ({ color, onChange }) => {
 									: "text-default opacity-50"
 							}`}>
 							{tab}
-						</a>
+						</span>
 						{selectedTab === tab && (
 							<motion.div
 								transition={{

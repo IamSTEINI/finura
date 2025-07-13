@@ -13,12 +13,11 @@ const ChildrenInput: React.FC<ChildrenInputProps> = ({
     childPosition = "right",
     value,
     onChange,
-    border = true,
     ...props
 }) => {
     if (children) {
         return (
-            <div className="input-wrapper flex items-center gap-x-2" style={{border: border ? "1px" : "none"}}>
+            <div className="input-wrapper flex items-center gap-x-2">
                 {childPosition === "left" && (
                     <div className="w-fit items-center justify-center flex gap-x-2">
                         {children}

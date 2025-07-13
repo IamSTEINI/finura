@@ -21,23 +21,19 @@ export async function createOrUpdateAdminUser() {
 
 	if (adminByIdResult.rows.length > 0) {
 		await query(
-			`UPDATE users 
-			 SET username = $1, password_hash = $2, email = $3, roles = $4, updated_at = NOW(), profile_picture = $5
-			 WHERE user_id = '0'`,
+			`UPDATE users SET username = $1, password_hash = $2, email = $3, roles = $4, updated_at = NOW(), profile_picture = $5 WHERE user_id = '0'`,
 			[username, passwordHash, email, roles, defaultProfilePicture]
 		);
 		console.log("[+] Admin user updated (ID: 0)");
 	} else if (adminByUsernameResult.rows.length > 0) {
 		await query(
-			`INSERT INTO users (user_id, username, password_hash, email, roles, is_active, created_at, updated_at, profile_picture)
-			 VALUES ('0', $1, $2, $3, $4, true, NOW(), NOW(), $5)`,
+			`INSERT INTO users (user_id, username, password_hash, email, roles, is_active, created_at, updated_at, profile_picture) VALUES ('0', $1, $2, $3, $4, true, NOW(), NOW(), $5)`,
 			[username, passwordHash, email, roles, defaultProfilePicture]
 		);
 		console.log("[+] Admin user recreated with ID: 0");
 	} else {
 		await query(
-			`INSERT INTO users (user_id, username, password_hash, email, roles, is_active, created_at, updated_at, profile_picture)
-			 VALUES (0, $1, $2, $3, $4, true, NOW(), NOW(), $5)`,
+			`INSERT INTO users (user_id, username, password_hash, email, roles, is_active, created_at, updated_at, profile_picture) VALUES (0, $1, $2, $3, $4, true, NOW(), NOW(), $5)`,
 			[username, passwordHash, email, roles, defaultProfilePicture]
 		);
 		console.log("[+] Admin user created with ID: 0");

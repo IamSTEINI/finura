@@ -88,7 +88,7 @@ export const Header = ({
 							childPosition="left"
 							border={false}
 							placeholder={t(
-								"language.dashboard_header_search_placeholder"
+								"dashboard.header_search_placeholder"
 							)}
 							className="w-full">
 							<SearchIcon size={18} opacity={0.5} />
