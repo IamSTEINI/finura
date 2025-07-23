@@ -46,13 +46,21 @@
 
 		"header_search_placeholder": "Search...",
 		"header_notifications": "Notifications",
-		"header_no_notifications": "No notifications to see here."
-		
+		"header_no_notifications": "No notifications to see here.",
+		"header_notifications_clear": "Empty mailbox"
 	},
 	"time": {
 		"just_now": "just now",
 		"minutes_ago": "%count min ago",
 		"hours_ago": "%count hour ago",
 		"days_ago": "%count day ago"
+	},
+	"errors": {
+		"signin": {
+			"MISSING_DATA": "Please fill out the form",
+			"INVALID_EMAIL": "This email is not valid",
+			"MISSING_PASSWORD": "The password is missing",
+			"LOGIN_FAILED": "Login failed, please try again"
+		}
 	}
 }

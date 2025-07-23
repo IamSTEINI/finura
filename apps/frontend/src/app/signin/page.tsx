@@ -12,17 +12,94 @@ import Header from "../components/ui/Header";
 function SignIn() {
 	const { t } = useLocale();
 	const [step, setStep] = useState("email");
-	const [email, setEmail] = useState("");
+	const [emailOrUsername, setEmailOrUsername] = useState("");
+	const [error, setError] = useState("");
+	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleContinue = () => {
+		if (!emailOrUsername.trim()) {
+			setError(t("errors.signin.MISSING_DATA"));
+			return;
+		}
+
 		setStep("password");
+		setError("");
+	};
+
+	React.useEffect(() => {
+		if (error) {
+			const timer = setTimeout(() => {
+				setError("");
+			}, 2000);
+
+			return () => clearTimeout(timer);
+		}
+	}, [error]);
+
+	const login = async () => {
+		try {
+			if (!password.trim()) {
+				setError(t("errors.signin.MISSING_PASSWORD"));
+				return;
+			}
+
+			console.log("Attempting login req to:", "http://localhost:10000/noauth/auth/login/");
+
+			const response = await fetch(
+				"http://localhost:10000/noauth/auth/login/",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						unameoremail: emailOrUsername,
+						password: password,
+					}),
+					credentials: 'include',
+				}
+			);
+
+			const data = await response.json();
+			console.log("Response data:", data);
+
+			if (!response.ok) {
+				setError(data.message || t("errors.signin.LOGIN_FAILED"));
+				return;
+			} else {
+				if (data.session) {
+					localStorage.setItem(
+						"DO_NOT_SHARE_SESSION_TOKEN",
+						data.session.token
+					);
+					localStorage.setItem(
+						"DO_NOT_SHARE_SESSION_REFRESH_TOKEN",
+						data.session.refresh_token
+					);
+					window.location.href = "/dashboard";
+					
+				} else {
+					setError(t("errors.signin.LOGIN_FAILED"))
+				}
+			}
+		} catch (err) {
+			console.error("Login error:", err);
+			if (err instanceof Error) {
+				console.error("Error details:", {
+					name: err.name,
+					message: err.message,
+					stack: err.stack
+				});
+			}
+			setError(t("errors.signin.LOGIN_FAILED"));
+		}
 	};
 
 	return (
 		<div className="w-full h-screen flex flex-col space-y-2 justify-center items-center px-5 overflow-hidden">
-			<Header/>
-            <Image
+			<Header />
+			<Image
 				src="/finura/FINURA_BANNER.png"
 				alt="Logo"
 				width={200}
@@ -54,8 +131,15 @@ function SignIn() {
 								<input
 									className="w-full"
 									type="text"
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
+									value={emailOrUsername}
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											handleContinue();
+										}
+									}}
+									onChange={(e) =>
+										setEmailOrUsername(e.target.value)
+									}
 									placeholder={t(
 										"general.sign_in_page_placeholder"
 									)}></input>
@@ -65,6 +149,11 @@ function SignIn() {
 								onClick={handleContinue}>
 								{t("general.continue")}
 							</button>
+							{error && (
+								<span className="text-red-500 translate-y-2">
+									{error}
+								</span>
+							)}
 						</motion.div>
 					) : (
 						<motion.div
@@ -76,33 +165,48 @@ function SignIn() {
 							className="md:w-[50%] md:max-w-[700px] min-w-[400px] w-full card flex flex-col space-y-2 items-center"
 							style={{ padding: "24px" }}>
 							<h1 className="truncate w-full">
-								{t("general.sign_in_page_title_continued").replace(
-									"%workspace",
-									"your workspace"
-								)}
+								{t(
+									"general.sign_in_page_title_continued"
+								).replace("%workspace", "your workspace")}
 							</h1>
 							<Seperator />
 							<div className="w-full h-fit mt-5">
 								<span className="opacity-50 ml-0.5 w-full text-start">
 									{t("general.sign_in_password_label")}
 								</span>
-                                <ChildrenInput
-                                    className="w-full border-color border"
-                                    childPosition="right"
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder={t("general.sign_in_password_placeholder")}>
-                                    <div 
-                                        className="cursor-pointer opacity-50 hover:opacity-100 transition-all"
-                                        onClick={() => setShowPassword(!showPassword)}>
-                                        {showPassword ? (
-                                            <Eye size={18}/>
-                                        ): (
-                                            <EyeClosed size={18}/>
-                                        )}
-                                    </div>
-                                </ChildrenInput>
+								<ChildrenInput
+									className="w-full border-color border"
+									childPosition="right"
+									type={showPassword ? "text" : "password"}
+									value={password}
+									focus={true}
+									onChange={(e) =>
+										setPassword(e.target.value)
+									}
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											login();
+										}
+									}}
+									placeholder={t(
+										"general.sign_in_password_placeholder"
+									)}>
+									<div
+										className="cursor-pointer opacity-50 hover:opacity-100 transition-all"
+										onClick={() =>
+											setShowPassword(!showPassword)
+										}>
+										{showPassword ? (
+											<Eye size={18} />
+										) : (
+											<EyeClosed size={18} />
+										)}
+									</div>
+								</ChildrenInput>
 							</div>
-							<button className="btn-forward w-full h-[40px]">
+							<button
+								onClick={() => login()}
+								className="btn-forward w-full h-[40px]">
 								{t("general.sign_in")}
 							</button>
 							<div className="flex w-full">
@@ -113,6 +217,11 @@ function SignIn() {
 									{t("general.go_back")}
 								</span>
 							</div>
+							{error && (
+								<span className="text-red-500 translate-y-2">
+									{error}
+								</span>
+							)}
 						</motion.div>
 					)}
 				</AnimatePresence>
@@ -125,7 +234,7 @@ function SignIn() {
 				<a href="/setup">{t("general.get_finura")}</a>
 			</div>
 
-           <Footer/>
+			<Footer />
 		</div>
 	);
 }

@@ -16,6 +16,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
@@ -143,6 +144,15 @@ func main() {
 	}
 	r := chi.NewRouter()
 
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:3000", "http://127.0.0.1:3000", "http://localhost", "http://127.0.0.1"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	}))
+
 	testSessionID := "test_session_" + strconv.FormatInt(time.Now().Unix(), 10)
 	testSession := &UserSession{
 		UserID:    "0",
@@ -231,6 +241,15 @@ func newReverseProxy(target string) *reverseProxy {
 	return &reverseProxy{proxy: &httputil.ReverseProxy{
 		Director:  director,
 		Transport: transport,
+		ModifyResponse: func(resp *http.Response) error {
+			resp.Header.Del("Access-Control-Allow-Origin")
+			resp.Header.Del("Access-Control-Allow-Methods")
+			resp.Header.Del("Access-Control-Allow-Headers")
+			resp.Header.Del("Access-Control-Allow-Credentials")
+			resp.Header.Del("Access-Control-Expose-Headers")
+			resp.Header.Del("Access-Control-Max-Age")
+			return nil
+		},
 		ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
 			log.Printf("[PROXY ERROR] %v", err)
 			http.Error(w, "Bad Gateway", http.StatusBadGateway)

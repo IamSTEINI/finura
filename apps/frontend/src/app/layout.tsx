@@ -5,6 +5,8 @@ import AppThemeProvider from "./provider/themes/AppThemeProvider";
 import { LocaleProvider } from "@/context/LocaleContext";
 import { NotificationProvider } from "@/context/NotificationContext";
 import AuthProvider from "./provider/auth/AuthProvider";
+import { WebsocketProvider } from "@/context/WebsocketContext";
+import { MailboxProvider } from "@/context/MailboxContext";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -77,13 +79,15 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 				<AppThemeProvider>
-					<AuthProvider>
-						<LocaleProvider>
-							<NotificationProvider>
-								{children}
-							</NotificationProvider>
-						</LocaleProvider>
-					</AuthProvider>
+					<NotificationProvider>
+						<MailboxProvider>
+							<WebsocketProvider>
+								<AuthProvider>
+									<LocaleProvider>{children}</LocaleProvider>
+								</AuthProvider>
+							</WebsocketProvider>
+						</MailboxProvider>
+					</NotificationProvider>
 				</AppThemeProvider>
 			</body>
 		</html>

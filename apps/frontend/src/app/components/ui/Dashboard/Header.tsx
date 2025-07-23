@@ -2,6 +2,7 @@ import { PanelLeft, SearchIcon } from "lucide-react";
 import ChildrenInput from "../ChildrenInput";
 import NotificationSection from "./NotificationSection";
 import { useLocale } from "@/context/LocaleContext";
+import { useMailbox } from "@/context/MailboxContext";
 
 interface SidebarProps {
 	isCollapsed: boolean;
@@ -17,56 +18,7 @@ export const Header = ({
 	changeTab,
 }: SidebarProps) => {
 	const { t } = useLocale();
-	const exampleNotifications = [
-		{
-			author: "John Doe",
-			message: "New task assigned to you",
-			time: "1750333769",
-			author_id: 18573831,
-		},
-		{
-			author: "Jane Smith",
-			message: "Meeting in 15 minutes. Hurry up or youll gonna be late",
-			time: "1750148445",
-			author_id: 18573831,
-		},
-		{
-			author: "Jane Smith",
-			message: "Meeting in 15 minutes. Hurry up or youll gonna be late",
-			time: "1750148445",
-			author_id: 18573831,
-		},
-		{
-			author: "Jane Smith",
-			message: "Meeting in 15 minutes. Hurry up or youll gonna be late",
-			time: "1750148445",
-			author_id: 18573831,
-		},
-		{
-			author: "Jane Smith",
-			message: "Meeting in 15 minutes. Hurry up or youll gonna be late",
-			time: "1750148445",
-			author_id: 18573831,
-		},
-		{
-			author: "Jane Smith",
-			message: "Meeting in 15 minutes. Hurry up or youll gonna be late",
-			time: "1750148445",
-			author_id: 18573831,
-		},
-		{
-			author: "Jane Smith",
-			message: "Meeting in 15 minutes. Hurry up or youll gonna be late",
-			time: "1750148445",
-			author_id: 18573831,
-		},
-		{
-			author: "Jane Smith",
-			message: "Meeting in 15 minutes. Hurry up or youll gonna be late",
-			time: "1750148445",
-			author_id: 18573831,
-		},
-	];
+	const { mails, markAsRead } = useMailbox();
 	return (
 		<header className="header max-h-[50px] min-h-[50px] px-2 border-b sidebar-border-color flex items-center justify-between">
 			<div className="flex items-center min-w-fit w-full dashboard-text">
@@ -98,7 +50,8 @@ export const Header = ({
 						setTab={(e) => {
 							changeTab(e);
 						}}
-						notifications={exampleNotifications}
+						notifications={mails}
+						markAsRead={markAsRead}
 					/>
 				</div>
 			</div>

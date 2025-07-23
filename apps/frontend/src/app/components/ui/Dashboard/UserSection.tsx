@@ -2,12 +2,21 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Languages, LogOut, Moon, Settings, Sun, TestTube, User } from "lucide-react";
+import {
+	Languages,
+	LogOut,
+	Moon,
+	Settings,
+	Sun,
+	TestTube,
+	User,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import { getAllLocales, useLocale } from "@/context/LocaleContext";
 import { useDevMode } from "@/context/DeveloperContext";
 import DropDown from "../DropDown";
 import { useNotification } from "@/context/NotificationContext";
+import Image from "next/image";
 
 interface DashboardUserProps {
 	isCollapsed: boolean;
@@ -47,6 +56,11 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 
 	if (!mounted) return null;
 
+	const userObj =
+		localStorage && localStorage.getItem("USER_INFO")
+			? JSON.parse(localStorage.getItem("USER_INFO") || "{}")
+			: null;
+
 	return (
 		<>
 			<div
@@ -59,8 +73,15 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 					className={`flex items-center space-x-3 ${
 						isCollapsed ? "justify-center" : "justify-start"
 					}`}>
-					<div className="min-w-8 w-8 min-h-8 h-8 bg-gray-500 rounded-full flex items-center justify-center">
-						<User className="w-4 h-4" />
+					<div className="min-w-8 w-8 min-h-8 h-8 bg-gray-500 rounded-full overflow-hidden flex items-center justify-center">
+						<Image
+							width={500}
+							height={500}
+							src={"/img/" + userObj.profile_picture}
+							alt=""
+							className="w-full h-full object-cover"
+							style={{ objectFit: "cover" }}
+						/>
 					</div>
 					<AnimatePresence initial={false}>
 						{!isCollapsed && (
@@ -74,9 +95,7 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 									John Doe
 								</p>
 								<p className="text-xs dashboard-text opacity-75">
-									{t(
-										"dashboard.sidebar_role_adminstrator"
-									)}
+									{t("dashboard.sidebar_role_adminstrator")}
 								</p>
 							</motion.div>
 						)}
@@ -87,7 +106,7 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 				</div>
 			</div>
 			<AnimatePresence>
-				{open && (
+				{open && userObj && (
 					<motion.div
 						ref={dropdownRef}
 						initial={{ opacity: 0, scale: 0.9 }}
@@ -96,15 +115,22 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 						transition={{ duration: 0.2 }}
 						className="absolute bottom-20 ml-20 card flex flex-col w-fit">
 						<div className="border-b sidebar-border-color pb-1 gap-x-2 flex flex-row items-start justify-start w-full">
-							<div className="min-w-8 w-8 min-h-8 h-8 bg-gray-500 mt-1 rounded-full flex items-center justify-center">
-								<User className="w-4 h-4" />
+							<div className="min-w-8 w-8 min-h-8 h-8 bg-gray-500 mt-1 rounded-full overflow-hidden flex items-center justify-center">
+								<Image
+									width={500}
+									height={500}
+									src={"/img/" + userObj.profile_picture}
+									alt=""
+									className="w-full h-full object-cover"
+									style={{ objectFit: "cover" }}
+								/>
 							</div>
 							<div className="flex flex-col justify-between">
 								<h3 className="w-fit text-nowrap text-sm font-bold">
-									John Doe
+									{userObj.firstname} {userObj.lastname}
 								</h3>
 								<span className="text-sm opacity-50 truncate max-w-[90%] min-w-[50px]">
-									thisisjohn97@gmail.com
+									{userObj.email}
 								</span>
 							</div>
 						</div>
@@ -128,12 +154,8 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 							)}
 							{t("dashboard.sidebar_menu_switchmode")}{" "}
 							{theme === "dark"
-								? t(
-										"dashboard.sidebar_menu_switch_light"
-								  )
-								: t(
-										"dashboard.sidebar_menu_switch_dark"
-								  )}
+								? t("dashboard.sidebar_menu_switch_light")
+								: t("dashboard.sidebar_menu_switch_dark")}
 						</button>
 						{devMode && (
 							<div className="border rounded-md border-red-500 w-full">
@@ -149,13 +171,19 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 											changeLocale(value)
 										}
 										searchable={true}
-										placeholder={t("general.select_language")}
+										placeholder={t(
+											"general.select_language"
+										)}
 										className="w-full h-10 mb-1"
 										defaultValue={getAllLocales()[0]?.value}
 										selected={locale}
 									/>
 								</div>
-								<button onClick={()=>addNotification("Hey", "Title")} className="btn-text-only-l my-0.5 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
+								<button
+									onClick={() =>
+										addNotification("Hey", "Title")
+									}
+									className="btn-text-only-l my-0.5 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
 									<TestTube
 										size={18}
 										opacity={0.6}

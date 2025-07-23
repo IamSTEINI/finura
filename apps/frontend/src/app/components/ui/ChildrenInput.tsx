@@ -4,6 +4,7 @@ interface ChildrenInputProps extends InputHTMLAttributes<HTMLInputElement> {
     children?: React.ReactNode;
     childPosition?: "left" | "right";
     border?: boolean;
+    focus?: boolean;
     value?: string | number | readonly string[];
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -12,9 +13,18 @@ const ChildrenInput: React.FC<ChildrenInputProps> = ({
     children,
     childPosition = "right",
     value,
+    focus,
     onChange,
     ...props
 }) => {
+    const inputRef = React.useRef<HTMLInputElement>(null);
+
+    React.useEffect(() => {
+        if (focus && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [focus]);
+
     if (children) {
         return (
             <div className="input-wrapper flex items-center gap-x-2">
@@ -24,6 +34,7 @@ const ChildrenInput: React.FC<ChildrenInputProps> = ({
                     </div>
                 )}
                 <input 
+                    ref={inputRef}
                     value={value}
                     onChange={onChange}
                     {...props} 

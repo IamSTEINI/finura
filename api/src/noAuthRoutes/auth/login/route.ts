@@ -27,11 +27,11 @@ const loginHandler: RequestHandler = async (req, res) => {
 			throw new Error("LOGIN_MISSING_CREDENTIALS");
 		}
 
-		const isInDB = await checkUserInDB(sanitizedUnameOrEmail, password);
-		if (isInDB) {
+		const user = await checkUserInDB(sanitizedUnameOrEmail, password);
+		if (user) {
 			const session = await createSession(
-				sanitizedUnameOrEmail,
-				sanitizedPassword,
+				user.id,
+				user.username,
 				["member"]
 			);
 

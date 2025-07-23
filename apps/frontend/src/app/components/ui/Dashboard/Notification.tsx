@@ -6,6 +6,8 @@ interface NotificationProps {
 	author: string;
 	time: string;
 	content: string;
+	id: string;
+	markAsRead?: (id: string) => void;
 	onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
@@ -13,11 +15,13 @@ const Notification: React.FC<NotificationProps> = ({
 	author,
 	time,
 	content,
+	id,
+	markAsRead,
 	onClick,
 }) => {
 	return (
 		<div
-			className="w-full max-h-[60px] min-h-[60px] border-b flex flex-col pt-1 overflow-hidden cursor-pointer hover:backdrop-brightness-90 px-2"
+			className="w-full max-h-[60px] min-h-[60px] border-b flex flex-col pt-1 overflow-hidden select-none cursor-pointer hover:backdrop-brightness-90 px-2"
 			style={{ borderColor: "var(--seperator-color)" }}
 			onClick={onClick}>
 			<div className="flex flex-row justify-between items-center translate-y-1">
@@ -31,6 +35,12 @@ const Notification: React.FC<NotificationProps> = ({
 					{content}
 				</div>
 				<button
+					onClick={(e) => {
+						e.stopPropagation();
+						if (markAsRead) {
+							markAsRead(id);
+						}
+					}}
 					style={{
 						padding: "4px 7px 4px 7px",
 						backgroundColor: "transparent",

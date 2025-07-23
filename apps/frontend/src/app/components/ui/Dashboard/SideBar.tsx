@@ -1,13 +1,13 @@
 import {
-	Calendar,
-	ChartArea,
-	Contact,
+	// Calendar,
+	// ChartArea,
+	// Contact,
 	FileText,
 	Home,
-	Package,
-	Receipt,
-	Send,
-	Upload,
+	// Package,
+	// Receipt,
+	// Send,
+	// Upload,
 } from "lucide-react";
 import DropDown from "../DropDown";
 import { useState } from "react";
@@ -33,13 +33,13 @@ export const Sidebar = ({
 	const menuItems = [
 		{ icon: Home, label: t("dashboard.sidebar_dashboard") },
 		{ icon: FileText, label: t("dashboard.sidebar_invoices") },
-		{ icon: Contact, label: t("dashboard.sidebar_customers") },
-		{ icon: Receipt, label: t("dashboard.sidebar_receipts") },
-		{ icon: Send, label: t("dashboard.sidebar_chats") },
-		{ icon: Calendar, label: t("dashboard.sidebar_appointments") },
-		{ icon: ChartArea, label: t("dashboard.sidebar_analytics") },
-		{ icon: Package, label: t("dashboard.sidebar_products") },
-		{ icon: Upload, label: t("dashboard.sidebar_export") },
+		// { icon: Contact, label: t("dashboard.sidebar_customers") },
+		// { icon: Receipt, label: t("dashboard.sidebar_receipts") },
+		// { icon: Send, label: t("dashboard.sidebar_chats") },
+		// { icon: Calendar, label: t("dashboard.sidebar_appointments") },
+		// { icon: ChartArea, label: t("dashboard.sidebar_analytics") },
+		// { icon: Package, label: t("dashboard.sidebar_products") },
+		// { icon: Upload, label: t("dashboard.sidebar_export") },
 	];
 	const [selectedWorkSpace, setSelectedWorkspace] = useState("");
 
@@ -59,7 +59,7 @@ export const Sidebar = ({
 							height={100}
 						/>
 					</div>
-					<AnimatePresence initial={false}>
+					{/* <AnimatePresence initial={false}>
 						{!isCollapsed && (
 							<motion.div
 								className="flex-1 mr-2"
@@ -85,7 +85,7 @@ export const Sidebar = ({
 								/>
 							</motion.div>
 						)}
-					</AnimatePresence>
+					</AnimatePresence> */}
 				</div>
 			</div>
 

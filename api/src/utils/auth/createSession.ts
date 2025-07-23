@@ -1,4 +1,4 @@
-export async function createSession(username: string, user_id: string, roles: string[]) {
+export async function createSession(user_id: string, username: string, roles: string[]) {
 	try {
 		const response = await fetch("http://localhost:8001/noauth/login", {
 			method: "POST",
@@ -6,8 +6,8 @@ export async function createSession(username: string, user_id: string, roles: st
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				username,
 				user_id,
+				username,
 				roles
 			}),
 		});

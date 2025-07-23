@@ -6,24 +6,21 @@ import { Bell } from "lucide-react";
 import Seperator from "../Seperator";
 import Notification from "./Notification";
 import { useLocale } from "@/context/LocaleContext";
-
-interface NotificationType {
-	author: string;
-	message: string;
-	time: string;
-	author_id: number;
-}
+import { Mail, useMailbox } from "@/context/MailboxContext";
 
 interface NotificationSectionProps {
-	notifications: NotificationType[];
+	notifications: Mail[];
 	setTab: (tabLabel: string) => void;
+	markAsRead: (notificationId: string) => void;
 }
 
 const NotificationSection: React.FC<NotificationSectionProps> = ({
 	notifications,
 	setTab,
+	markAsRead,
 }) => {
 	const { t } = useLocale();
+	const { clearMailbox } = useMailbox();
 	const [open, setOpen] = useState(false);
 	const notifSectionRef = useRef<HTMLDivElement>(null);
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -46,6 +43,15 @@ const NotificationSection: React.FC<NotificationSectionProps> = ({
 		};
 	}, []);
 
+	const unreadCount = notifications.filter(
+		(notification) => !notification.read
+	).length;
+	const sortedNotifications = [...notifications].sort((a, b) => {
+		if (a.read === b.read) {
+			return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+		}
+		return a.read ? -1 : 1;
+	});
 	return (
 		<>
 			<div
@@ -58,11 +64,9 @@ const NotificationSection: React.FC<NotificationSectionProps> = ({
 					className="p-2 relative rounded-full"
 					style={{ backgroundColor: "transparent" }}>
 					<Bell className="w-5 h-5 dashboard-text" />
-					{notifications.length > 0 && (
+					{unreadCount > 0 && (
 						<span className="absolute rounded-full bg-red-500 min-w-5 min-h-5 max-w-5 max-h-5 text-xs text-center justify-center items-center flex -translate-y-7.5 translate-x-2.5">
-							{notifications.length <= 9
-								? notifications.length
-								: "9+"}
+							{unreadCount <= 9 ? unreadCount : "9+"}
 						</span>
 					)}
 				</button>
@@ -78,39 +82,59 @@ const NotificationSection: React.FC<NotificationSectionProps> = ({
 							onClick={(e) => e.stopPropagation()}
 							className="absolute top-16 right-0 card flex flex-col md:w-[350px] w-[370px]">
 							<div className="flex flex-row justify-between items-center pb-1">
-								<h3>
-									{t(
-										"dashboard.header_notifications"
-									)}
-								</h3>
-								<span>{notifications.length}</span>
+								<h3>{t("dashboard.header_notifications")}</h3>
+								<div className="flex flex-row items-center space-x-2 justify-center">
+									<span>{notifications.length}</span>
+									<span
+										className="opacity-50 hover:opacity-100 cursor-pointer select-none"
+										onClick={() => {
+											clearMailbox()
+										}}>
+										{t(
+											"dashboard.header_notifications_clear"
+										)}
+									</span>
+								</div>
 							</div>
 							<Seperator />
 							<div className="flex flex-col w-full max-h-[300px] overflow-y-scroll rounded-md pt-1">
 								{notifications.length === 0 ? (
 									<div className="py-2 pb-0 text-center text-gray-500">
-										{t(
-											"dashboard.header_no_notifications"
-										)}
+										{t("dashboard.header_no_notifications")}
 									</div>
 								) : (
-									notifications
-										.slice()
-										.sort(
-											(a, b) =>
-												new Date(b.time).getTime() -
-												new Date(a.time).getTime()
-										)
-										.map((notification, index) => (
-											<Notification
-												onClick={() =>
-													setTab("Chat-"+notification.author_id)
+									sortedNotifications
+										.reverse()
+										.map((notification) => (
+											<div
+												key={
+													notification.notificationId
 												}
-												key={index}
-												author={notification.author}
-												content={notification.message}
-												time={notification.time}
-											/>
+												className={`${
+													notification.read
+														? "opacity-50"
+														: "opacity-100"
+												}`}>
+												<Notification
+													onClick={() =>
+														setTab(
+															"Chat-" +
+																notification.author_id
+														)
+													}
+													author={notification.author}
+													content={
+														notification.message
+													}
+													time={
+														notification.timestamp
+													}
+													markAsRead={markAsRead}
+													id={
+														notification.notificationId
+													}
+												/>
+											</div>
 										))
 								)}
 							</div>

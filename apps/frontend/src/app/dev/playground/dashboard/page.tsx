@@ -39,7 +39,7 @@ export default function DashboardPlayground() {
 	};
 
 	return (
-		<div className="flex h-screen bg-gray-100">
+		<div className="flex h-screen">
 			<Sidebar
 				isCollapsed={isCollapsed}
 				setIsCollapsed={setIsCollapsed}

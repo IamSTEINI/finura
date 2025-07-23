@@ -4,21 +4,31 @@ import { query } from "../db/db";
 export async function checkUserInDB(
 	usernameoremail: string,
 	password: string
-): Promise<boolean> {
+): Promise<{ id: string; username: string; email: string } | null> {
 	try {
 		const result = await query(
-			"SELECT password_hash FROM users WHERE username = $1 OR email = $1",
+			"SELECT id, username, email, password_hash FROM users WHERE username = $1 OR email = $1",
 			[usernameoremail]
 		);
 
 		if (result.rows.length === 0) {
-			return false;
+			return null;
 		}
 
-		const hashFromDB = result.rows[0].password_hash;
-		return verifyPassword(password, hashFromDB);
+		const user = result.rows[0];
+		const isValidPassword = await verifyPassword(password, user.password_hash);
+		
+		if (!isValidPassword) {
+			return null;
+		}
+
+		return {
+			id: user.id.toString(),
+			username: user.username,
+			email: user.email
+		};
 	} catch (error) {
 		console.error("Error checking user credentials:", error);
-		return false;
+		return null;
 	}
 }

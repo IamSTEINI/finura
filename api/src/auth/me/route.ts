@@ -2,6 +2,7 @@ import { Router, RequestHandler } from "express";
 import express from "express";
 import { checkUserInDB } from "../../utils/auth/checkUserInDB";
 import { fetchSession } from "../../utils/auth/fetchSession";
+import { getUserFromDB } from "../../utils/auth/getUserFromDB";
 
 const authmeRouter = Router();
 authmeRouter.use(express.json());
@@ -33,14 +34,15 @@ const meHandler: RequestHandler = async (req, res) => {
 		// 	data: mockUserSession,
 		// });
 
-		// Request redis and return session if available, otherwise return error
 		// http://localhost:8001/api/auth/me
 		const fetched_session = await fetchSession(token);
 		console.log(fetched_session);
-
+		const userObj = await getUserFromDB(fetched_session.user_id);
+		console.log(userObj)
 		res.status(200).json({
 			success: true,
 			session: fetched_session,
+			user: userObj,
 		});
 	} catch (error) {
 		res.status(401).json({
