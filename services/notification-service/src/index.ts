@@ -6,6 +6,24 @@
 import * as http from "http";
 import * as WebSocket from "ws";
 
+const notifyWebSocketStatus = async (userId: string, isConnected: boolean) => {
+	try {
+		await fetch("http://localhost:10000/api/websocket-status", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				user_id: userId,
+				connected: isConnected
+			})
+		});
+		console.log(`Notified API: User ${userId} WebSocket status: ${isConnected}`);
+	} catch (error) {
+		console.error(`Failed to notify WebSocket status for user ${userId}:`, error);
+	}
+};
+
 const server = http.createServer((req, res) => {
 	res.writeHead(200, { "Content-Type": "application/json" });
 	res.end("Hello World\n");
@@ -28,9 +46,13 @@ type UserSession = {
 	lastname: string;
 };
 
-const fetchSession = async (token: string): Promise<UserSession> => {
+const fetchSession = async (token: string, isHeartbeat: boolean = false): Promise<UserSession> => {
 	try {
-		const response = await fetch("http://localhost:8001/api/auth/me", {
+		const url = isHeartbeat 
+			? "http://localhost:8001/api/auth/me?heartbeat=true"
+			: "http://localhost:8001/api/auth/me";
+			
+		const response = await fetch(url, {
 			method: "POST",
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -58,7 +80,7 @@ const fetchSession = async (token: string): Promise<UserSession> => {
 
 const wss = new WebSocket.Server({ server });
 
-const handleSocket = (ws: WebSocket.WebSocket, user: UserSession) => {
+const handleSocket = (ws: WebSocket.WebSocket, user: UserSession, token: string) => {
 	console.log(`Handling socket for user ${user.username} (${user.user_id})`);
 
 	ws.send(
@@ -69,17 +91,39 @@ const handleSocket = (ws: WebSocket.WebSocket, user: UserSession) => {
 		})
 	);
 
-  ws.send(
+	ws.send(
 		JSON.stringify({
 			type: "MAIL",
 			message: `Logged in on new client`,
 			sender: "FINURA",
-      sender_id: "0",
+			sender_id: "0",
 		})
 	);
 
+	const interval = setInterval(async () => {
+		try {
+			await fetchSession(token, true);
+		} catch (error) {
+			console.error(
+				`Failed to fetch updated session for ${user.user_id}:`,
+				error
+			);
+			ws.send(
+				JSON.stringify({
+					type: "ERROR",
+					message: "Failed to fetch updated session",
+				})
+			);
+		}
+	}, 60000);
+
+	ws.on("close", () => {
+		clearInterval(interval);
+		console.log(`Stopped session updates for ${user.user_id}`);
+	});
+
 	ws.on("error", (err) => {
-		console.error(`Error for ${user.username}:`, err);
+		console.error(`Error for ${user.user_id}:`, err);
 	});
 };
 
@@ -120,7 +164,7 @@ wss.on("connection", (ws) => {
 				);
 
 				try {
-					const session = await fetchSession(data.token);
+					const session = await fetchSession(data.token, false);
 					console.log(
 						`[${connectionId}] Session authenticated for ${session.username} (${session.user_id})`
 					);
@@ -142,6 +186,8 @@ wss.on("connection", (ws) => {
 						`[${connectionId}] Added user ${session.user_id} to active sockets`
 					);
 
+					await notifyWebSocketStatus(session.user_id, true);
+
 					ws.send(
 						JSON.stringify({
 							type: "AUTHORIZATION_SUCCESS",
@@ -149,7 +195,7 @@ wss.on("connection", (ws) => {
 						})
 					);
 
-					handleSocket(ws, session);
+					handleSocket(ws, session, data.token);
 				} catch (error) {
 					console.error(
 						`[${connectionId}] Authorization failed:`,
@@ -192,6 +238,7 @@ wss.on("connection", (ws) => {
 		);
 		if (currentUser) {
 			activeSockets.delete(currentUser.user_id);
+			notifyWebSocketStatus(currentUser.user_id, false);
 			console.log(
 				`[${connectionId}] Client ${currentUser.username} disconnected`
 			);

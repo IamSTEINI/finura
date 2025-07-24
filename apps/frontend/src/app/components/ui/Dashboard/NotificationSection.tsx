@@ -20,7 +20,7 @@ const NotificationSection: React.FC<NotificationSectionProps> = ({
 	markAsRead,
 }) => {
 	const { t } = useLocale();
-	const { clearMailbox } = useMailbox();
+	const { clearMailbox, deleteMail } = useMailbox();
 	const [open, setOpen] = useState(false);
 	const notifSectionRef = useRef<HTMLDivElement>(null);
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -48,7 +48,10 @@ const NotificationSection: React.FC<NotificationSectionProps> = ({
 	).length;
 	const sortedNotifications = [...notifications].sort((a, b) => {
 		if (a.read === b.read) {
-			return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+			return (
+				new Date(a.timestamp).getTime() -
+				new Date(b.timestamp).getTime()
+			);
 		}
 		return a.read ? -1 : 1;
 	});
@@ -88,7 +91,7 @@ const NotificationSection: React.FC<NotificationSectionProps> = ({
 									<span
 										className="opacity-50 hover:opacity-100 cursor-pointer select-none"
 										onClick={() => {
-											clearMailbox()
+											clearMailbox();
 										}}>
 										{t(
 											"dashboard.header_notifications_clear"
@@ -130,6 +133,7 @@ const NotificationSection: React.FC<NotificationSectionProps> = ({
 														notification.timestamp
 													}
 													markAsRead={markAsRead}
+													deleteMail={deleteMail}
 													id={
 														notification.notificationId
 													}

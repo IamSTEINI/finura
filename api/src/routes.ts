@@ -1,12 +1,14 @@
 import { Router } from "express";
 import authRouter from "./auth/route";
 import redisProxyMiddleware from "./middleware/proxyHandler";
+import websocketRouter from "./websocket-status/route";
 
 const router = Router();
 
 router.use(redisProxyMiddleware);
 
 router.use('/auth', authRouter);
+router.use('/websocket-status', websocketRouter);
 
 export default router;
 

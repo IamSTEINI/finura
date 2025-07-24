@@ -1,6 +1,6 @@
 import React from "react";
 import TimestampToTime from "../../utils/timestampToTime";
-import { MailCheck } from "lucide-react";
+import { MailCheck, Trash } from "lucide-react";
 
 interface NotificationProps {
 	author: string;
@@ -8,6 +8,7 @@ interface NotificationProps {
 	content: string;
 	id: string;
 	markAsRead?: (id: string) => void;
+	deleteMail?: (id: string) => void;
 	onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
@@ -17,6 +18,7 @@ const Notification: React.FC<NotificationProps> = ({
 	content,
 	id,
 	markAsRead,
+	deleteMail,
 	onClick,
 }) => {
 	return (
@@ -34,19 +36,36 @@ const Notification: React.FC<NotificationProps> = ({
 				<div className="opacity-50 w-full truncate truncate max-w-[80%]">
 					{content}
 				</div>
-				<button
-					onClick={(e) => {
-						e.stopPropagation();
-						if (markAsRead) {
-							markAsRead(id);
-						}
-					}}
-					style={{
-						padding: "4px 7px 4px 7px",
-						backgroundColor: "transparent",
-					}} className="-translate-y-1 opacity-50 hover:opacity-100">
-					<MailCheck size={16} className="mt-1 dashboard-text" />
-				</button>
+				<div className="w-fit flex flex-row items-center justify-center">
+					<button
+						onClick={(e) => {
+							e.stopPropagation();
+							if (deleteMail) {
+								deleteMail(id);
+							}
+						}}
+						style={{
+							padding: "4px 7px 4px 7px",
+							backgroundColor: "transparent",
+						}}
+						className="-translate-y-1 opacity-50 hover:opacity-100">
+						<Trash size={16} className="mt-1 dashboard-text" />
+					</button>
+					<button
+						onClick={(e) => {
+							e.stopPropagation();
+							if (markAsRead) {
+								markAsRead(id);
+							}
+						}}
+						style={{
+							padding: "4px 7px 4px 7px",
+							backgroundColor: "transparent",
+						}}
+						className="-translate-y-1 opacity-50 hover:opacity-100">
+						<MailCheck size={16} className="mt-1 dashboard-text" />
+					</button>
+				</div>
 			</div>
 		</div>
 	);

@@ -25,6 +25,7 @@ interface MailboxContextType {
 	}) => void;
 	markAsRead: (notificationId: string) => void;
 	clearMailbox: () => void;
+	deleteMail: (notificationId: string) => void;
 }
 
 interface MailboxProviderProps {
@@ -89,8 +90,15 @@ export const MailboxProvider = ({ children }: MailboxProviderProps) => {
 		localStorage.removeItem("FINURA_MAILBOX");
 	};
 
+	const deleteMail = (notificationId: string) => {
+		setMails((prevMails: Mail[]) =>
+			prevMails.filter((mail) => mail.notificationId !== notificationId)
+		);
+	};
+
 	return (
-		<MailboxContext.Provider value={{ mails, addMail, markAsRead, clearMailbox }}>
+		<MailboxContext.Provider
+			value={{ mails, addMail, markAsRead, clearMailbox, deleteMail }}>
 			{children}
 		</MailboxContext.Provider>
 	);
