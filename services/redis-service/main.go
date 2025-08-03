@@ -640,6 +640,7 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 		"::1":       true,
 		"[::1]":     true,
 	}
+	fmt.Println(ip + " tried to access")
 	if !allowedIPs[ip] {
 		http.Error(w, "Forbidden", http.StatusForbidden)
 		return
