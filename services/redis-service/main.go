@@ -636,9 +636,10 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 	ip := getClientIP(r)
 
 	allowedIPs := map[string]bool{
-		"127.0.0.1": true,
-		"::1":       true,
-		"[::1]":     true,
+		"127.0.0.1":     true,
+		"::1":           true,
+		"[::1]":         true,
+		"208.77.244.73": true,
 	}
 	fmt.Println(ip + " tried to access")
 	if !allowedIPs[ip] {
