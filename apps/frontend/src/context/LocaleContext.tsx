@@ -35,7 +35,8 @@ export const LocaleProvider = ({ children }: { children: React.ReactNode }) => {
 	const t = (key: string): string => {
 		const result = key
 			.split(".")
-			.reduce((obj, k) => obj?.[k], translations);
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			.reduce((obj: any, k) => obj?.[k], translations);
 		return typeof result === "string" ? result : key;
 	};
 
