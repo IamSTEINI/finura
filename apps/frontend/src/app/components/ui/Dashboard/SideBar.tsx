@@ -1,4 +1,5 @@
 import {
+	Cog,
 	// Calendar,
 	// ChartArea,
 	// Contact,
@@ -9,8 +10,8 @@ import {
 	// Send,
 	// Upload,
 } from "lucide-react";
-import DropDown from "../DropDown";
-import { useState } from "react";
+//import DropDown from "../DropDown";
+//import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import DashboardUser from "./UserSection";
@@ -33,6 +34,7 @@ export const Sidebar = ({
 	const menuItems = [
 		{ icon: Home, label: t("dashboard.sidebar_dashboard") },
 		{ icon: FileText, label: t("dashboard.sidebar_invoices") },
+		{ icon: Cog, label: t("dashboard.sidebar_company_settings") },
 		// { icon: Contact, label: t("dashboard.sidebar_customers") },
 		// { icon: Receipt, label: t("dashboard.sidebar_receipts") },
 		// { icon: Send, label: t("dashboard.sidebar_chats") },
@@ -41,7 +43,7 @@ export const Sidebar = ({
 		// { icon: Package, label: t("dashboard.sidebar_products") },
 		// { icon: Upload, label: t("dashboard.sidebar_export") },
 	];
-	const [selectedWorkSpace, setSelectedWorkspace] = useState("");
+	//const [selectedWorkSpace, setSelectedWorkspace] = useState("");
 
 	return (
 		<motion.div

@@ -19,8 +19,17 @@
 		"get_started": "Get started",
 		"features": "Features",
 		"solutions": "Solutions",
-		"pricing": "Pricing"
-		
+		"pricing": "Pricing",
+		"try_again": "Try again",
+		"money": "Money",
+		"yes": "Yes",
+		"no": "No",
+		"delete": "Delete",
+		"notes": "Notes",
+		"open": "Open",
+		"page": "Page",
+		"of": "of",
+		"filter": "Filter"
 	},
 	"dashboard": {
 		"sidebar_dashboard": "Dashboard",
@@ -43,17 +52,123 @@
 		"sidebar_menu_logout": "Log out",
 		"sidebar_workspace_placeholder": "Select workspace",
 		"sidebar_chats": "Chats",
+		"sidebar_company_settings": "Company settings",
+
 
 		"header_search_placeholder": "Search...",
 		"header_notifications": "Notifications",
 		"header_no_notifications": "No notifications to see here.",
-		"header_notifications_clear": "Empty mailbox"
+		"header_notifications_clear": "Empty mailbox",
+	
+		"dashboard_info": "Here's an overview of your company's financial dashboard.",
+		"dashboard_appointments": "Your appointments",
+		"dashboard_statistics": "Statistics",
+		"dashboard_loading_statistics": "Statistics",
+		"dashboard_monthly_goal": "Monthly goal",
+		"dashboard_company_revenue": "Company revenue this year",
+		"dashboard_loading_chart": "Loading chart data"
+	
+	},
+	"months": {
+		"jan": "January",
+		"feb": "February",
+		"mar": "March",
+		"apr": "April",
+		"may": "May",
+		"jun": "June",
+		"jul": "July",
+		"aug": "August",
+		"sep": "September",
+		"oct": "October",
+		"nov": "November",
+		"dec": "December"
+	},
+	"invoices": {
+		"title": "Invoices",
+		"gross_amount": "Gross amount",
+		"pending_amount": "Pending amount",
+		"by_customer": "By Customer",
+		"paid_invoices": "Paid Invoices",
+		"unpaid_invoices": "Unpaid Invoices",
+		"overdue": "Overdue",
+		"due_this_week": "Due This Week",
+		"this_month": "This Month",
+		"last_month": "Last Month",
+		"high_value": "High Value (>1000)",
+		"low_value": "Low Value (<500)",
+		"select_customer": "Select Customer",
+		"choose_template": "Choose a template",
+		"create_invoice": "Create Invoice",
+		"new_invoice": "New Invoice",
+		"loading_invoices": "Loading invoices...",
+		"no_invoices_found": "No invoices found.",
+		"try_changing_filter": "Try changing the filter or ",
+		"create_new_invoice": "Create a new invoice",
+		"invoice_id": "ID",
+		"customer": "Customer",
+		"date_issued": "Date Issued",
+		"due_date": "Due Date",
+		"amount_gross": "Amount Gross",
+		"paid": "Paid",
+		"actions": "Actions",
+		"not_paid_yet": "Not paid yet",
+		"not_due_yet": "Not due yet",
+		"confirmation": "Are you sure you want to delete this invoice? This action cannot be undone.",
+		"deleted_invoice": "Invoice deleted successfully",
+		"created_invoice": "Invoice created successfully",
+		"form": {
+			"create_new_invoice": "Create a new Invoice",
+			"customer_information": "Customer Information",
+			"contacts": "Contacts",
+			"customer_company_name": "Customer / Company name*",
+			"customer_number": "Customer Number",
+			"contact_person": "Contact Person",
+			"invoice_date": "Invoice date*",
+			"date_of_service": "Date of service*",
+			"customer_address": "Customer address*",
+			"zip_code_city": "ZIP CODE & City*",
+			"vat_id": "Vat-Id",
+			"items": "Items",
+			"add_item": "Add item",
+			"notes": "Notes",
+			"notes_placeholder": "Note, e.g. Thanks for payment",
+			"payment_terms": "Payment terms",
+			"goods_remain": "Goods remain ours until full payment",
+			"payment_due_within": "Payment due within",
+			"days": "days",
+			"late_payment_interest": "Late payment incurs interest",
+			"no_partial_payments": "Partial payments not accepted",
+			"retention_of_title": "Retention of Title",
+			"retention_placeholder": "Specific terms for retention of title",
+			"additional_terms": "Additional Terms or Comments for your business",
+			"additional_terms_placeholder": "E.g. tax exemption, special conditions, or other notes",
+			"without_tax": "Without tax",
+			"net": "Net:",
+			"with_tax": "With tax:",
+			"gross": "Gross:",
+			"create": "Create",
+			"save_as_template": "Save as template",
+			"no_contacts_found": "No contacts found. Saved contacts will appear here.",
+			"line_item": {
+				"quantity": "Quantity",
+				"duplicate_item": "Duplicate item",
+				"remove_item": "Remove item",
+				"item_name": "Item name*",
+				"item_name_placeholder": "Product or service name",
+				"description": "Description",
+				"description_placeholder": "Item description",
+				"amount": "Amount*",
+				"tax_rate": "Tax rate",
+				"item_number": "Item"
+			}
+		}
 	},
 	"time": {
 		"just_now": "just now",
-		"minutes_ago": "%count min ago",
-		"hours_ago": "%count hour ago",
-		"days_ago": "%count day ago"
+		"minutes_ago": "%count min/s ago",
+		"hours_ago": "%count hour/s ago",
+		"in_hours": "in %count hour/s",
+		"days_ago": "%count day/s ago"
 	},
 	"errors": {
 		"signin": {
@@ -61,6 +176,9 @@
 			"INVALID_EMAIL": "This email is not valid",
 			"MISSING_PASSWORD": "The password is missing",
 			"LOGIN_FAILED": "Login failed, please try again"
-		}
+		},
+		"FETCH_FAILED": "Failed to fetch data.",
+		"CREATION_FAILED": "Failed to create. Please try again.",
+		"NO_TOKEN": "No session token found. Please log in again."
 	}
 }

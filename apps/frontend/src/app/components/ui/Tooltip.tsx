@@ -12,7 +12,7 @@ const ToolTip: React.FC<ToolTipProps> = ({
 	const getPositionClasses = () => {
 		switch (direction) {
 			case "top":
-				return "translate-y-0 mb-2 origin-bottom group-hover:-translate-y-8";
+				return "translate-y-0 mb-2 origin-bottom group-hover:-translate-y-10";
 			case "right":
 				return "translate-x-0 ml-2 mt-2.5 origin-left group-hover:translate-x-15";
 			case "bottom":
@@ -27,7 +27,7 @@ const ToolTip: React.FC<ToolTipProps> = ({
 	return (
 		<div className="relative group cursor-auto">
 			<span
-				className={`absolute px-2 py-1 border tooltip-border-color tooltip-bg-color w-fit text-start text-[15px] rounded-md opacity-0 group-hover:opacity-100 scale-0 group-hover:scale-100 transition-all duration-100 ease-in-out transform pointer-events-none z-[999] ${getPositionClasses()}`}>
+				className={`absolute text-nowrap px-2 py-1 border tooltip-border-color tooltip-bg-color w-fit text-start text-[15px] rounded-md opacity-0 group-hover:opacity-100 scale-0 group-hover:scale-100 transition-all duration-100 ease-in-out transform pointer-events-none z-[999] ${getPositionClasses()}`}>
 				{tooltip}
 			</span>
 			{children}

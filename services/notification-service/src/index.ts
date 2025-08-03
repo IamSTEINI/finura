@@ -90,16 +90,6 @@ const handleSocket = (ws: WebSocket.WebSocket, user: UserSession, token: string)
 			sender: "FINURA",
 		})
 	);
-
-	ws.send(
-		JSON.stringify({
-			type: "MAIL",
-			message: `Logged in on new client`,
-			sender: "FINURA",
-			sender_id: "0",
-		})
-	);
-
 	const interval = setInterval(async () => {
 		try {
 			await fetchSession(token, true);

@@ -55,13 +55,11 @@ const ACdata = [
 ];
 
 const pieData = [
-	{ name: "Group A", value: 400 },
-	{ name: "Group B", value: 300 },
-	{ name: "Group C", value: 300 },
-	{ name: "Group D", value: 200 },
+	{ name: "Paid", value: 10 },
+	{ name: "Unpaid", value: 2 },
 ];
 
-const pieColors = ["#ff10ee"];
+const pieColors = ["#ff10ee", "#ff1010ff"];
 
 export default function Charts() {
 	const { theme, setTheme } = useTheme();
@@ -165,7 +163,7 @@ export default function Charts() {
 					endStopOpacity={0.6}
 				/>
 				<h1>Pie Chart (Round and flat)</h1>
-				<div className="flex flex-row space-x-10 w-full h-fit">
+				<div className="flex flex-row space-x-10 w-full h-[200px]">
 					{" "}
 					<CPieChart data={pieData} colors={pieColors} showTooltip />
 					<CPieChart

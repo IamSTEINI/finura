@@ -3,6 +3,9 @@ import { useLocale } from "@/context/LocaleContext";
 import React, { useEffect, useState } from "react";
 import { Sidebar } from "../components/ui/Dashboard/SideBar";
 import { Header } from "../components/ui/Dashboard/Header";
+import Invoices from "./pages/Invoices";
+import CompanySettings from "./pages/CompanySettings";
+import Dashboard from "./pages/Dashboard";
 
 function DashboardPage() {
 	const { t } = useLocale();
@@ -21,8 +24,14 @@ function DashboardPage() {
 
 	const renderContent = () => {
 		switch (tab) {
+			case t("dashboard.sidebar_invoices"):
+				return <Invoices/>
+			case t("dashboard.sidebar_company_settings"):
+				return <CompanySettings/>
+			case t("dashboard.sidebar_dashboard"):
+				return <Dashboard/>
 			default:
-				return <div>Nothing</div>;
+				return <div>404!!1! Please refresh the page</div>;
 		}
 	};
 

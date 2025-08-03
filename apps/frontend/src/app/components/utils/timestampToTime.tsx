@@ -8,34 +8,33 @@ export const timestampToTime = (
 	const timestampMs = timestamp < 10000000000 ? timestamp * 1000 : timestamp;
 
 	const now = Date.now();
-	const secondsAgo = Math.floor((now - timestampMs) / 1000);
+	const diffSeconds = Math.floor((timestampMs - now) / 1000);
+	const isPast = diffSeconds < 0;
+	const secondsAbs = Math.abs(diffSeconds);
 
-	if (secondsAgo < 60) {
-		return t("time.just_now");
+	if (secondsAbs < 60) {
+		return isPast ? t("time.just_now") : t("time.in_a_moment");
 	}
 
-	const minutesAgo = Math.floor(secondsAgo / 60);
-	if (minutesAgo < 60) {
-		return t("time.minutes_ago").replace(
-			"%count",
-			minutesAgo.toString()
-		);
+	const minutesAbs = Math.floor(secondsAbs / 60);
+	if (minutesAbs < 60) {
+		return isPast
+			? t("time.minutes_ago").replace("%count", minutesAbs.toString())
+			: t("time.in_minutes").replace("%count", minutesAbs.toString());
 	}
 
-	const hoursAgo = Math.floor(minutesAgo / 60);
-	if (hoursAgo < 24) {
-		return t("time.hours_ago").replace(
-			"%count",
-			hoursAgo.toString()
-		);
+	const hoursAbs = Math.floor(minutesAbs / 60);
+	if (hoursAbs < 24) {
+		return isPast
+			? t("time.hours_ago").replace("%count", hoursAbs.toString())
+			: t("time.in_hours").replace("%count", hoursAbs.toString());
 	}
 
-	const daysAgo = Math.floor(hoursAgo / 24);
-	if (daysAgo < 7) {
-		return t("time.days_ago").replace(
-			"%count",
-			daysAgo.toString()
-		);
+	const daysAbs = Math.floor(hoursAbs / 24);
+	if (daysAbs < 7) {
+		return isPast
+			? t("time.days_ago").replace("%count", daysAbs.toString())
+			: t("time.in_days").replace("%count", daysAbs.toString());
 	}
 
 	const date = new Date(timestampMs);

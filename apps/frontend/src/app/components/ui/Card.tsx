@@ -2,10 +2,12 @@ import React from 'react';
 
 interface CardProps {
     children?: React.ReactNode;
+    className?: string;
 }
-const Card = ({children}: CardProps) => {
+
+const Card = ({ children, className }: CardProps) => {
     return (
-        <div className='card'>
+        <div className={`card ${className || ''}`}>
             {children}
         </div>
     );

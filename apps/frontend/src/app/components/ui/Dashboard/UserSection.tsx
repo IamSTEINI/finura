@@ -113,7 +113,7 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 						animate={{ opacity: 1, scale: 1 }}
 						exit={{ opacity: 0, scale: 0.9 }}
 						transition={{ duration: 0.2 }}
-						className="absolute bottom-20 ml-20 card flex flex-col w-fit">
+						className="absolute bottom-20 ml-20 card flex flex-col w-fit z-[99999]">
 						<div className="border-b sidebar-border-color pb-1 gap-x-2 flex flex-row items-start justify-start w-full">
 							<div className="min-w-8 w-8 min-h-8 h-8 bg-gray-500 mt-1 rounded-full overflow-hidden flex items-center justify-center">
 								<Image

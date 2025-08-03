@@ -12,6 +12,7 @@ import {
 } from "react";
 import { useNotification } from "./NotificationContext";
 import { useMailbox } from "./MailboxContext";
+import { useDevMode } from "./DeveloperContext";
 
 interface WebSocketMessage {
 	id: string;
@@ -328,6 +329,7 @@ export const WebsocketProvider = ({ children }: { children: ReactNode }) => {
 	const socketRef = useRef<Record<string, WebSocket>>({});
 	const { addNotification } = useNotification();
 	const { addMail } = useMailbox();
+	const { devMode } = useDevMode();
 
 	const addMessage = useCallback(
 		(connectionId: string, message: WebSocketMessage) => {
@@ -428,6 +430,7 @@ export const WebsocketProvider = ({ children }: { children: ReactNode }) => {
 							if (data.message && data.sender) {
 								addNotification(data.message, data.sender);
 							}
+							// FIX: double displaying
 						} else if (data.type === "MAIL") {
 							if (data.message && data.sender && data.sender_id) {
 								addMail({
@@ -514,9 +517,7 @@ export const WebsocketProvider = ({ children }: { children: ReactNode }) => {
 	return (
 		<websocketContext.Provider value={value}>
 			{children}
-			{process.env.NODE_ENV === "development" && (
-				<WebSocketDeveloperWindow connections={connections} />
-			)}
+			{devMode && <WebSocketDeveloperWindow connections={connections} />}
 		</websocketContext.Provider>
 	);
 };

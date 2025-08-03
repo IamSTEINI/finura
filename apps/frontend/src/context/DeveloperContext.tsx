@@ -7,7 +7,7 @@ interface DeveloperContextType {
 }
 
 const DevModeContext = createContext<DeveloperContextType>({
-    devMode: true,
+    devMode: false,
 });
 
 export const useDevMode = () => useContext(DevModeContext);

@@ -121,89 +121,89 @@ export interface Permissions {
 // Permissions are just a general permission of something, the admins also will be able to add specific roles to something
 
 export interface Role {
-  id: number;
-  name: string;
-  color: string;
-  permissions: Permissions;
+	id: number;
+	name: string;
+	color: string;
+	permissions: Permissions;
 }
 
 export const DEFAULT_PERMISSIONS: Permissions = {
-  teams: {
-    create: false,
-    delete: false,
-  },
-  invoices: {
-    create: true,
-    delete: false,
-    archive: false,
-    restore: false,
-    discount: false,
-    view: true,
-  },
-  customers: {
-    add: true,
-    delete: false,
-    edit: true,
-    viewHistory: false,
-    view: true,
-  },
-  receipts: {
-    add: true,
-    delete: false,
-    view: true,
-  },
-  chat: {
-    view: true,
-    send: true,
-    sendImages: true,
-    delete: false,
-  },
-  appointments: {
-    create: true,
-    delete: false,
-    edit: true,
-    assign: false,
-    view: true,
-  },
-  analytics: {
-    view: false,
-  },
-  products: {
-    view: true,
-    create: false,
-    edit: false,
-    remove: false,
-    viewStockLevels: true,
-    adjustStockLevels: false,
-  },
-  roles: {
-    create: false,
-    remove: false,
-    edit: false,
-    assign: false,
-    view: false,
-  },
-  auditLogs: {
-    viewUser: false,
-    viewSystem: false,
-    download: false,
-  },
-  profile: {
-    changePicture: true,
-    changeNickname: true,
-    changePassword: true,
-  },
-  system: {
-    exportData: false,
-    createUsers: false,
-    removeUsers: false,
-    suspendUsers: false,
-    editSettings: false,
-    backupData: false,
-    viewStatus: false,
-    restartServices: false,
-    manageIntegrations: false,
-    isSystemRole: false,
-    admin: false,
-  },
+	teams: {
+		create: false,
+		delete: false,
+	},
+	invoices: {
+		create: true,
+		delete: false,
+		archive: false,
+		restore: false,
+		discount: false,
+		view: true,
+	},
+	customers: {
+		add: true,
+		delete: false,
+		edit: true,
+		viewHistory: false,
+		view: true,
+	},
+	receipts: {
+		add: true,
+		delete: false,
+		view: true,
+	},
+	chat: {
+		view: true,
+		send: true,
+		sendImages: true,
+		delete: false,
+	},
+	appointments: {
+		create: true,
+		delete: false,
+		edit: true,
+		assign: false,
+		view: true,
+	},
+	analytics: {
+		view: false,
+	},
+	products: {
+		view: true,
+		create: false,
+		edit: false,
+		remove: false,
+		viewStockLevels: true,
+		adjustStockLevels: false,
+	},
+	roles: {
+		create: false,
+		remove: false,
+		edit: false,
+		assign: false,
+		view: false,
+	},
+	auditLogs: {
+		viewUser: false,
+		viewSystem: false,
+		download: false,
+	},
+	profile: {
+		changePicture: true,
+		changeNickname: true,
+		changePassword: true,
+	},
+	system: {
+		exportData: false,
+		createUsers: false,
+		removeUsers: false,
+		suspendUsers: false,
+		editSettings: false,
+		backupData: false,
+		viewStatus: false,
+		restartServices: false,
+		manageIntegrations: false,
+		isSystemRole: false,
+		admin: false,
+	},
 };

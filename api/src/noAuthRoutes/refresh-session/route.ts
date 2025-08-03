@@ -9,7 +9,7 @@ const refreshSession: RequestHandler = async (req, res) => {
 		const authHeader = req.headers.authorization;
 		if (!authHeader || !authHeader.startsWith("Bearer ")) {
 			res.status(401).json({
-				error: "REFRESH_SESSION_MISSING_TOKEN",
+				error: "API_MISSING_TOKEN",
 				message:
 					"Missing or invalid Authorization header. Please provide a valid Bearer token.",
 			});
@@ -19,7 +19,7 @@ const refreshSession: RequestHandler = async (req, res) => {
 		const refreshToken = authHeader.substring(7).trim();
 		if (!refreshToken) {
 			res.status(401).json({
-				error: "REFRESH_SESSION_INVALID_TOKEN",
+				error: "API_INVALID_TOKEN",
 				message: "Refresh token is required for session refresh",
 			});
 			return;
@@ -76,7 +76,7 @@ const refreshSession: RequestHandler = async (req, res) => {
 		console.error("Session refresh error:", error);
 
 		res.status(500).json({
-			error: "REFRESH_SESSION_INTERNAL_ERROR",
+			error: "API_INTERNAL_ERROR",
 			message: "Internal server error during session refresh",
 		});
 	}

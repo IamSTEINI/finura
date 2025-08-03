@@ -10,6 +10,7 @@ interface DataPoint {
 interface ChartsProps {
 	data: DataPoint[];
 	colors?: string[];
+	className?: string;
 	showTooltip?: boolean;
 	endAngle?: number;
 }
@@ -21,6 +22,7 @@ export default function CPieChart({
 	colors = defaultColors,
 	showTooltip = true,
 	endAngle = 360,
+	className,
 }: ChartsProps) {
 	const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -28,7 +30,7 @@ export default function CPieChart({
 
 	return (
 		<div className="w-full h-full">
-			<ResponsiveContainer width="100%" height="100%">
+			<ResponsiveContainer width="100%" height="100%" className={className}>
 				<PieChart>
 					<defs>
 						{data.map((_, idx) => (
@@ -99,7 +101,7 @@ export default function CPieChart({
 											: colors[idx % colors.length];
 
 									return (
-										<div className="p-3 flex items-center justify-center flex-row default-text-color h-fit w-fit flex flex-row space-x-3 chart-tooltip-border-color border rounded-md font-xl chart-tooltip-bg">
+										<div className="p-3 flex z-[9999] items-center justify-center flex-row default-text-color h-fit w-fit flex flex-row space-x-3 chart-tooltip-border-color border rounded-md font-xl chart-tooltip-bg">
 											<div
 												className="w-1 rounded-full self-stretch mt-1"
 												style={{
@@ -109,7 +111,7 @@ export default function CPieChart({
 												<p className="font-bold">
 													{payload[0].name}
 												</p>
-												<p className="text-xs">{`Value: ${payload[0].value}`}</p>
+												<p className="text-xs">{`${payload[0].value}`}</p>
 											</div>
 										</div>
 									);

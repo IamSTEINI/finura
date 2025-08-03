@@ -25,9 +25,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	}, []);
 
 	useEffect(() => {
-		console.log("Current pathname:", window.location.pathname);
-		console.log("isProtectedRoute:", isProtectedRoute());
-		
 		if (isProtectedRoute()) {
 			console.log("Authenticating for route " + window.location.pathname);
 			const token = localStorage.getItem("DO_NOT_SHARE_SESSION_TOKEN");
@@ -52,9 +49,15 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
 						if (!wsInitialized) {
 							setTimeout(() => {
-								const existingConnection = getConnection("notification-pipe");
-								if (existingConnection && existingConnection.isConnected) {
-									console.log("[NOTIFICATION] WebSocket already connected, skipping");
+								const existingConnection =
+									getConnection("notification-pipe");
+								if (
+									existingConnection &&
+									existingConnection.isConnected
+								) {
+									console.log(
+										"[NOTIFICATION] WebSocket already connected, skipping"
+									);
 									setWsInitialized(true);
 									return;
 								}
@@ -110,7 +113,13 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 		} else {
 			setAuthenticated(true);
 		}
-	}, [isProtectedRoute, createConnection, closeConnection, getConnection, wsInitialized]);
+	}, [
+		isProtectedRoute,
+		createConnection,
+		closeConnection,
+		getConnection,
+		wsInitialized,
+	]);
 
 	useEffect(() => {
 		if (authenticated) {
