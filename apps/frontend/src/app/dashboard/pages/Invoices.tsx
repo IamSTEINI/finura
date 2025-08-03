@@ -46,6 +46,8 @@ function Invoices() {
 	const INVOICES_PER_PAGE = 10;
 	const { t } = useLocale();
 	const { addNotification } = useNotification();
+	const redisServiceUrl =
+		process.env.REDIS_SERVICE_URL || "http://localhost:8001";
 
 	const fetchInvoices = async () => {
 		setLoading(true);
@@ -59,7 +61,7 @@ function Invoices() {
 		}
 
 		try {
-			const response = await fetch("http://localhost:8001/api/invoices", {
+			const response = await fetch(redisServiceUrl+"/api/invoices", {
 				method: "GET",
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -265,7 +267,7 @@ function Invoices() {
 		}
 
 		try {
-			const response = await fetch("http://localhost:8001/api/invoices", {
+			const response = await fetch(redisServiceUrl+"/api/invoices", {
 				method: "POST",
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -310,7 +312,7 @@ function Invoices() {
 
 		try {
 			const response = await fetch(
-				`http://localhost:8001/api/invoices/${invoiceId}`,
+				redisServiceUrl+`/api/invoices/${invoiceId}`,
 				{
 					method: "DELETE",
 					headers: {

@@ -14,7 +14,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [visible, setVisible] = useState<boolean>(false);
 	const [wsInitialized, setWsInitialized] = useState<boolean>(false);
 	const { createConnection, closeConnection, getConnection } = useWebsocket();
-
+	const redisServiceUrl =
+		process.env.REDIS_SERVICE_URL || "http://localhost:8001";
 	const isProtectedRoute = useCallback(() => {
 		const protectedRoutes = ["/dashboard"];
 		if (typeof window !== "undefined") {
@@ -29,7 +30,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 			console.log("Authenticating for route " + window.location.pathname);
 			const token = localStorage.getItem("DO_NOT_SHARE_SESSION_TOKEN");
 
-			fetch("http://localhost:8001/api/auth/me", {
+			fetch(redisServiceUrl+"/api/auth/me", {
 				method: "POST",
 				headers: {
 					Authorization: `Bearer ${token}`,

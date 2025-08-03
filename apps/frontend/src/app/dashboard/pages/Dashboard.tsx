@@ -26,6 +26,8 @@ function Dashboard() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const { t } = useLocale();
+	const redisServiceUrl =
+		process.env.REDIS_SERVICE_URL || "http://localhost:8001";
 
 	const fetchInvoices = async () => {
 		setLoading(true);
@@ -39,7 +41,7 @@ function Dashboard() {
 		}
 
 		try {
-			const response = await fetch("http://localhost:8001/api/invoices", {
+			const response = await fetch(redisServiceUrl+"/api/invoices", {
 				method: "GET",
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -341,7 +343,10 @@ function Dashboard() {
 								<div className="w-full flex justify-center items-center py-8">
 									<div className="border-[#825494] border-3 animate-spin w-[30px] h-[30px] rounded-full"></div>
 									<span className="ml-2">
-										{t("dashboard.dashboard_loading_statistics")}...
+										{t(
+											"dashboard.dashboard_loading_statistics"
+										)}
+										...
 									</span>
 								</div>
 							) : (
@@ -405,7 +410,8 @@ function Dashboard() {
 								<div className="w-full h-full flex justify-center items-center">
 									<div className="border-[#825494] border-3 animate-spin w-[30px] h-[30px] rounded-full"></div>
 									<span className="ml-2">
-										{t("dashboard.dashboard_loading_chart")}...
+										{t("dashboard.dashboard_loading_chart")}
+										...
 									</span>
 								</div>
 							) : (

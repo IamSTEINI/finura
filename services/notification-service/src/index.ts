@@ -15,12 +15,17 @@ const notifyWebSocketStatus = async (userId: string, isConnected: boolean) => {
 			},
 			body: JSON.stringify({
 				user_id: userId,
-				connected: isConnected
-			})
+				connected: isConnected,
+			}),
 		});
-		console.log(`Notified API: User ${userId} WebSocket status: ${isConnected}`);
+		console.log(
+			`Notified API: User ${userId} WebSocket status: ${isConnected}`
+		);
 	} catch (error) {
-		console.error(`Failed to notify WebSocket status for user ${userId}:`, error);
+		console.error(
+			`Failed to notify WebSocket status for user ${userId}:`,
+			error
+		);
 	}
 };
 
@@ -46,12 +51,17 @@ type UserSession = {
 	lastname: string;
 };
 
-const fetchSession = async (token: string, isHeartbeat: boolean = false): Promise<UserSession> => {
+const fetchSession = async (
+	token: string,
+	isHeartbeat: boolean = false
+): Promise<UserSession> => {
+	const redisServiceUrl =
+		process.env.REDIS_SERVICE_URL || "http://localhost:8001";
 	try {
-		const url = isHeartbeat 
-			? "http://localhost:8001/api/auth/me?heartbeat=true"
-			: "http://localhost:8001/api/auth/me";
-			
+		const url = isHeartbeat
+			? redisServiceUrl+"/api/auth/me?heartbeat=true"
+			: redisServiceUrl+"/api/auth/me";
+
 		const response = await fetch(url, {
 			method: "POST",
 			headers: {
@@ -80,7 +90,11 @@ const fetchSession = async (token: string, isHeartbeat: boolean = false): Promis
 
 const wss = new WebSocket.Server({ server });
 
-const handleSocket = (ws: WebSocket.WebSocket, user: UserSession, token: string) => {
+const handleSocket = (
+	ws: WebSocket.WebSocket,
+	user: UserSession,
+	token: string
+) => {
 	console.log(`Handling socket for user ${user.username} (${user.user_id})`);
 
 	ws.send(
