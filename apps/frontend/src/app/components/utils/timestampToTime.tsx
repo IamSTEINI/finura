@@ -3,7 +3,7 @@ import { useLocale } from "@/context/LocaleContext";
 
 export const timestampToTime = (
 	timestamp: number,
-	t: (key: string, vars?: Record<string, any>) => string
+	t: (key: string, vars?: Record<string, unknown>) => string
 ): string => {
 	const timestampMs = timestamp < 10000000000 ? timestamp * 1000 : timestamp;
 

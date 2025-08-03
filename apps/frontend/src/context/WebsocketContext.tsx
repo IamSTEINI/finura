@@ -441,6 +441,7 @@ export const WebsocketProvider = ({ children }: { children: ReactNode }) => {
 							}
 						}
 					} catch (e) {
+						console.error(e)
 						console.log(
 							`WebSocket ${id} received non-JSON message:`,
 							event.data

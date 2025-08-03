@@ -17,7 +17,7 @@ const DeveloperMenu = ({ children }: DevProviderProps) => {
 	const [isDragging, setIsDragging] = useState(false);
 	const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 	const { connections } = useWebsocket();
-	const [updateTrigger, setUpdateTrigger] = useState(0);
+	const [, setUpdateTrigger] = useState(0);
 
 	useEffect(() => {
 		const loadItems = () => {
@@ -30,6 +30,7 @@ const DeveloperMenu = ({ children }: DevProviderProps) => {
 						const parsedValue = JSON.parse(rawValue);
 						items[key] = JSON.stringify(parsedValue, null, 2);
 					} catch (e) {
+						console.log(e)
 						items[key] = rawValue;
 					}
 				}
