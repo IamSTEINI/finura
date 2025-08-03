@@ -643,8 +643,9 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println(ip + " tried to access")
 	if !allowedIPs[ip] {
-		http.Error(w, "Forbidden", http.StatusForbidden)
-		return
+		// http.Error(w, "Forbidden", http.StatusForbidden)
+		// return
+		//! RAILWAY IP SWITCH
 	}
 
 	var data struct {
