@@ -149,19 +149,19 @@ const postUpdateCompany: RequestHandler = async (req, res) => {
 			return;
 		}
 		const companyData = {
-			companyName: req.body.company_name,
-			companyAddress: req.body.company_address,
-			companyPostalCode: req.body.company_postal_code,
-			companyEmail: req.body.company_email,
-			companyPhone: req.body.company_phone,
-			companyWebsite: req.body.company_website,
-			companyTaxNumber: req.body.company_tax_number,
-			companyVatId: req.body.company_vat_id,
-			companyDirector: req.body.company_director,
-			commercialRegister: req.body.commercial_register,
-			bankName: req.body.bank_name,
-			companyIban: req.body.company_iban,
-			companyBic: req.body.company_bic,
+			company_name: req.body.company_name,
+			company_address: req.body.company_address,
+			company_postal_code: req.body.company_postal_code,
+			company_email: req.body.company_email,
+			company_phone: req.body.company_phone,
+			company_website: req.body.company_website,
+			company_tax_number: req.body.company_tax_number,
+			company_vat_id: req.body.company_vat_id,
+			company_director: req.body.company_director,
+			commercial_register: req.body.commercial_register,
+			bank_name: req.body.bank_name,
+			company_iban: req.body.company_iban,
+			company_bic: req.body.company_bic,
 		};
 		try {
 			const updatedCompany = await updateCompanyInDB(companyData);

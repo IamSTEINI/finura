@@ -2,19 +2,20 @@ import { query } from "../db/db";
 import { Company } from "../db/schemas/COMPANY";
 
 const fieldMap: Record<keyof Company, string> = {
-	companyName: "company_name",
-	companyAddress: "company_address",
-	companyPostalCode: "company_postal_code",
-	companyEmail: "company_email",
-	companyPhone: "company_phone",
-	companyWebsite: "company_website",
-	companyTaxNumber: "company_tax_number",
-	companyVatId: "company_vat_id",
-	companyDirector: "company_director",
-	commercialRegister: "commercial_register",
-	bankName: "bank_name",
-	companyIban: "company_iban",
-	companyBic: "company_bic",
+	company_name: "company_name",
+	company_address: "company_address",
+	company_postal_code: "company_postal_code",
+	company_email: "company_email",
+	company_phone: "company_phone",
+	company_website: "company_website",
+	company_tax_number: "company_tax_number",
+	company_vat_id: "company_vat_id",
+	company_director: "company_director",
+	commercial_register: "commercial_register",
+	bank_name: "bank_name",
+	company_iban: "company_iban",
+	company_bic: "company_bic",
+	id: ""
 };
 
 export async function updateCompanyInDB(
