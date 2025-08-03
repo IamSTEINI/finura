@@ -1,6 +1,12 @@
-export async function createSession(user_id: string, username: string, roles: string[]) {
+export async function createSession(
+	user_id: string,
+	username: string,
+	roles: string[]
+) {
+	const redisServiceUrl =
+		process.env.REDIS_SERVICE_URL || "http://localhost:8001";
 	try {
-		const response = await fetch("http://localhost:8001/noauth/login", {
+		const response = await fetch(redisServiceUrl+"/noauth/login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -8,7 +14,7 @@ export async function createSession(user_id: string, username: string, roles: st
 			body: JSON.stringify({
 				user_id,
 				username,
-				roles
+				roles,
 			}),
 		});
 

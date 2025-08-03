@@ -25,7 +25,8 @@ function CompanySettings() {
 	const [error, setError] = useState<string | null>(null);
 	const [company, setCompany] = useState<Company | null>(null);
 	const [success, setSuccess] = useState<string | null>(null);
-
+	const redisServiceUrl =
+		process.env.REDIS_SERVICE_URL || "http://localhost:8001";
 	useEffect(() => {
 		const fetchCompany = async () => {
 			const token = localStorage.getItem("DO_NOT_SHARE_SESSION_TOKEN");
@@ -36,7 +37,7 @@ function CompanySettings() {
 			}
 			try {
 				const res = await fetch(
-					"http://localhost:8001/api/company/info",
+					redisServiceUrl+"/api/company/info",
 					{
 						headers: {
 							Authorization: `Bearer ${token}`,
@@ -107,7 +108,7 @@ function CompanySettings() {
 			return;
 		}
 		try {
-			const res = await fetch("http://localhost:8001/api/company/info", {
+			const res = await fetch(redisServiceUrl+"/api/company/info", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
