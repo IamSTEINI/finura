@@ -199,7 +199,7 @@ function Dashboard() {
 			<div className="w-full max-w-[1920px] h-full flex flex-col">
 				{error && (
 					<div className="card p-3 rounded-md mb-4 bg-red-50 border border-red-200">
-						<span className="text-red-500">{error}</span>
+						<span>{error}</span>
 						<button
 							className="ml-2 btn-text-only"
 							onClick={() => {
@@ -353,7 +353,7 @@ function Dashboard() {
 								<>
 									<SimpleStat
 										icon={<FileText />}
-										title={t("general.invoices")}
+										title={t("invoices.invoices")}
 										data={totalInvoices}
 										colorTheme="#be80d6ff"
 										useCountUpAnimation={true}
@@ -362,7 +362,7 @@ function Dashboard() {
 									/>
 									<SimpleStat
 										icon={<Euro />}
-										title={t("general.gross_amount")}
+										title={t("invoices.gross_amount")}
 										data={totalGrossAmount}
 										colorTheme="#56a356ff"
 										formatCurrency
@@ -372,7 +372,7 @@ function Dashboard() {
 									/>
 									<SimpleStat
 										icon={<Euro />}
-										title={t("general.pending_amount")}
+										title={t("invoices.pending_amount")}
 										data={pendingAmount}
 										colorTheme="#808080ff"
 										formatCurrency
