@@ -16,8 +16,11 @@ export async function checkUserInDB(
 		}
 
 		const user = result.rows[0];
-		const isValidPassword = await verifyPassword(password, user.password_hash);
-		
+		const isValidPassword = await verifyPassword(
+			password,
+			user.password_hash
+		);
+
 		if (!isValidPassword) {
 			return null;
 		}
@@ -25,7 +28,7 @@ export async function checkUserInDB(
 		return {
 			id: user.id.toString(),
 			username: user.username,
-			email: user.email
+			email: user.email,
 		};
 	} catch (error) {
 		console.error("Error checking user credentials:", error);

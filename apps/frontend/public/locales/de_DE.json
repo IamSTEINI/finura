@@ -83,6 +83,7 @@
 	},
 	"invoices": {
 		"title": "Rechnungen",
+		"invoices": "Rechnungen",
 		"gross_amount": "Bruttobetrag",
 		"pending_amount": "Offener Betrag",
 		"by_customer": "Nach Kunde",

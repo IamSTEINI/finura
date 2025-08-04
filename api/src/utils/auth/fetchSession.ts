@@ -1,8 +1,8 @@
 export async function fetchSession(token: string) {
 	const redisServiceUrl =
-			process.env.REDIS_SERVICE_URL || "http://localhost:8001";
+		process.env.REDIS_SERVICE_URL || "http://localhost:8001";
 	try {
-		const response = await fetch(redisServiceUrl+"/api/session/get", {
+		const response = await fetch(redisServiceUrl + "/api/session/get", {
 			method: "POST",
 			headers: {
 				Authorization: `Bearer ${token}`,

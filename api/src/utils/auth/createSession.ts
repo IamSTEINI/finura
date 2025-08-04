@@ -6,7 +6,7 @@ export async function createSession(
 	const redisServiceUrl =
 		process.env.REDIS_SERVICE_URL || "http://localhost:8001";
 	try {
-		const response = await fetch(redisServiceUrl+"/noauth/login", {
+		const response = await fetch(redisServiceUrl + "/noauth/login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

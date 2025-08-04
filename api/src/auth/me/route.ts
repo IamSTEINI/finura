@@ -40,20 +40,26 @@ const meHandler: RequestHandler = async (req, res) => {
 		const fetched_session = await fetchSession(token);
 		console.log(fetched_session);
 		const userObj = await getUserFromDB(fetched_session.user_id);
-		console.log(userObj)
+		console.log(userObj);
 		if (userObj?.id) {
 			setUserActive(String(userObj.id), true);
-			
+
 			// Only track activity if it's not a WebSocket heartbeat
-			const isHeartbeat = req.query.heartbeat === 'true';
+			const isHeartbeat = req.query.heartbeat === "true";
 			if (!isHeartbeat) {
 				updateUserActivity(String(userObj.id));
-				console.log(`[AUTH] Real user activity tracked for user ${userObj.id}`);
+				console.log(
+					`[AUTH] Real user activity tracked for user ${userObj.id}`
+				);
 			} else {
-				console.log(`[AUTH] WebSocket heartbeat ignored for user ${userObj.id}`);
+				console.log(
+					`[AUTH] WebSocket heartbeat ignored for user ${userObj.id}`
+				);
 			}
 		} else {
-			console.warn("User ID is undefined or null, skipping setUserActive.");
+			console.warn(
+				"User ID is undefined or null, skipping setUserActive."
+			);
 		}
 		res.status(200).json({
 			success: true,

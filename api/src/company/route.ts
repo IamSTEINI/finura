@@ -1,9 +1,9 @@
-import { Router } from 'express'
+import { Router } from "express";
 
-import infoRouter from './info/route'
+import infoRouter from "./info/route";
 
-const companyRouter = Router()
+const companyRouter = Router();
 
-companyRouter.use('/info', infoRouter)
+companyRouter.use("/info", infoRouter);
 
-export default companyRouter
+export default companyRouter;

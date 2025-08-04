@@ -54,12 +54,11 @@
 		"sidebar_chats": "Chats",
 		"sidebar_company_settings": "Company settings",
 
-
 		"header_search_placeholder": "Search...",
 		"header_notifications": "Notifications",
 		"header_no_notifications": "No notifications to see here.",
 		"header_notifications_clear": "Empty mailbox",
-	
+
 		"dashboard_info": "Here's an overview of your company's financial dashboard.",
 		"dashboard_appointments": "Your appointments",
 		"dashboard_statistics": "Statistics",
@@ -67,7 +66,6 @@
 		"dashboard_monthly_goal": "Monthly goal",
 		"dashboard_company_revenue": "Company revenue this year",
 		"dashboard_loading_chart": "Loading chart data"
-	
 	},
 	"months": {
 		"jan": "January",
@@ -85,6 +83,7 @@
 	},
 	"invoices": {
 		"title": "Invoices",
+		"invoices": "Invoices",
 		"gross_amount": "Gross amount",
 		"pending_amount": "Pending amount",
 		"by_customer": "By Customer",

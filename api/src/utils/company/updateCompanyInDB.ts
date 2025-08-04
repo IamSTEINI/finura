@@ -15,7 +15,7 @@ const fieldMap: Record<keyof Company, string> = {
 	bank_name: "bank_name",
 	company_iban: "company_iban",
 	company_bic: "company_bic",
-	id: ""
+	id: "",
 };
 
 export async function updateCompanyInDB(

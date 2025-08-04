@@ -9,7 +9,6 @@ import { invoiceNumberRouter } from "./number/route";
 const invoicesRouter = Router();
 invoicesRouter.use(express.json());
 
-
 invoicesRouter.use("/number", invoiceNumberRouter);
 
 invoicesRouter.get("/", async (req, res, next) => {
@@ -94,19 +93,19 @@ invoicesRouter.post("/", async (req, res, next) => {
 });
 
 invoicesRouter.delete("/:invoiceId", async (req, res, next) => {
-    try {
-        const authHeader = req.headers.authorization;
-        if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            res.status(401).json({ error: "Unauthorized: No token provided" });
-            return;
-        }
+	try {
+		const authHeader = req.headers.authorization;
+		if (!authHeader || !authHeader.startsWith("Bearer ")) {
+			res.status(401).json({ error: "Unauthorized: No token provided" });
+			return;
+		}
 
-        const token = authHeader.substring(7);
-        const sessionData = await fetchSession(token);
-        if (!sessionData || !sessionData.user_id) {
-            res.status(401).json({ error: "Unauthorized: Invalid token" });
-            return;
-        }
+		const token = authHeader.substring(7);
+		const sessionData = await fetchSession(token);
+		if (!sessionData || !sessionData.user_id) {
+			res.status(401).json({ error: "Unauthorized: Invalid token" });
+			return;
+		}
 
 		const { invoiceId } = req.params;
 		if (!invoiceId) {
@@ -119,19 +118,21 @@ invoicesRouter.delete("/:invoiceId", async (req, res, next) => {
 			return;
 		}
 
-		const { deleteInvoice } = await import("../utils/invoices/deleteInvoice");
+		const { deleteInvoice } = await import(
+			"../utils/invoices/deleteInvoice"
+		);
 		const deleted = await deleteInvoice(invoiceIdNum, sessionData.user_id);
 
-        if (!deleted) {
-            res.status(404).json({ error: "Invoice not found or not deleted" });
-            return;
-        }
+		if (!deleted) {
+			res.status(404).json({ error: "Invoice not found or not deleted" });
+			return;
+		}
 
-        res.status(200).json({ message: "Invoice deleted successfully" });
-    } catch (error) {
-        console.error("Error deleting invoice:", error);
-        next(error);
-    }
+		res.status(200).json({ message: "Invoice deleted successfully" });
+	} catch (error) {
+		console.error("Error deleting invoice:", error);
+		next(error);
+	}
 });
 
 function validateInvoiceData(data: InvoiceDetails): boolean {
