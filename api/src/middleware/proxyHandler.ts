@@ -15,8 +15,10 @@ const redisProxyMiddleware = (
 	) {
 		next();
 	} else {
+		next();
+		//! BYPASS DUE RAILWAY DEMO
         console.log(`Blocked request from: ${requestIP} accessing: ${req.path}`);
-		res.status(403).json({ error: "Access denied." });
+		// res.status(403).json({ error: "Access denied." });
 	}
 };
 
