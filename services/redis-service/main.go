@@ -570,17 +570,18 @@ func (s *Server) createRefreshToken(userID, username, sessionID string, ttl time
 }
 
 func (s *Server) RefreshSession(w http.ResponseWriter, r *http.Request) {
-	ip := getClientIP(r)
+	//ip := getClientIP(r)
 
-	allowedIPs := map[string]bool{
-		"127.0.0.1": true,
-		"::1":       true,
-		"[::1]":     true,
-	}
-	if !allowedIPs[ip] {
-		http.Error(w, "Forbidden", http.StatusForbidden)
-		return
-	}
+	//! RAILWAY BYPASS
+	// allowedIPs := map[string]bool{
+	// 	"127.0.0.1": true,
+	// 	"::1":       true,
+	// 	"[::1]":     true,
+	// }
+	// if !allowedIPs[ip] {
+	// 	http.Error(w, "Forbidden", http.StatusForbidden)
+	// 	return
+	// }
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
 		http.Error(w, "Missing Authorization header", http.StatusUnauthorized)
@@ -792,15 +793,16 @@ func (s *Server) ApiHandler(w http.ResponseWriter, r *http.Request) {
 func (s *Server) GetSession(w http.ResponseWriter, r *http.Request) {
 	ip := getClientIP(r)
 
-	allowedIPs := map[string]bool{
-		"127.0.0.1": true,
-		"::1":       true,
-		"[::1]":     true,
-	}
-	if !allowedIPs[ip] {
-		http.Error(w, "Forbidden", http.StatusForbidden)
-		return
-	}
+	//! RAILWAY BYPASS
+	// allowedIPs := map[string]bool{
+	// 	"127.0.0.1": true,
+	// 	"::1":       true,
+	// 	"[::1]":     true,
+	// }
+	// if !allowedIPs[ip] {
+	// 	http.Error(w, "Forbidden", http.StatusForbidden)
+	// 	return
+	// }
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
 		http.Error(w, "Missing Authorization header", http.StatusUnauthorized)
