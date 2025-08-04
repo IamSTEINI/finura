@@ -14,8 +14,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [visible, setVisible] = useState<boolean>(false);
 	const [wsInitialized, setWsInitialized] = useState<boolean>(false);
 	const { createConnection, closeConnection, getConnection } = useWebsocket();
-	const redisServiceUrl =
-		process.env.REDIS_SERVICE_URL || "http://localhost:8001";
+	// const redisServiceUrl =
+		// process.env.REDIS_SERVICE_URL || "http://localhost:8001";
 	const isProtectedRoute = useCallback(() => {
 		const protectedRoutes = ["/dashboard"];
 		if (typeof window !== "undefined") {
