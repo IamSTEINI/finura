@@ -199,9 +199,9 @@ function Dashboard() {
 			<div className="w-full max-w-[1920px] h-full flex flex-col">
 				{error && (
 					<div className="card p-3 rounded-md mb-4 bg-red-50 border border-red-200">
-						<span className="text-red-700">{error}</span>
+						<span className="text-red-500">{error}</span>
 						<button
-							className="ml-2 text-red-800 underline"
+							className="ml-2 btn-text-only"
 							onClick={() => {
 								setError(null);
 								fetchInvoices();
