@@ -19,23 +19,24 @@ export default function App() {
 				<p
 					className="border-color border p-2 rounded-md"
 					style={{ fontFamily: "Consolas, monospace" }}>
-					Welcome,
-		
-					Thank you for your interest in this project. Please note
-					that
-			
-					what you see here is only a small part of Finura&apos;s full
-					potential.
-				
-					Development is ongoing, and many features outlined in DEVLOG
-					1
-					are planned for future releases.
-					If you would like to explore a demo, click here and log in
-					using
-					the admin credentials: username “admin” and password
-					“admin”.
+					Welcome, Thank you for your interest in this project. Please
+					note that what you see here is only a small part of
+					Finura&apos;s full potential. Development is ongoing, and
+					many features outlined in DEVLOG 1 are planned for future
+					releases. If you would like to explore a demo, click here
+					and log in using the admin credentials: username “admin” and
+					password “admin”.
+					<br />
+					<strong>Note:</strong> The demo version does not fully
+					represent the capabilities of a real installation. Due to
+					hosting limitations, the provider (railway) can only host the
+					databases, API, and frontend, but not the microservices.
+					Some features may be unavailable or behave differently
+					compared to a complete deployment.
 				</p>
-				<button className="btn-border-only w-full" onClick={() => window.location.href = "/signin"}>
+				<button
+					className="btn-border-only w-full"
+					onClick={() => (window.location.href = "/signin")}>
 					Experience FINURA
 				</button>
 			</div>
