@@ -10,6 +10,7 @@ const redisProxyMiddleware = (
 	if (
 		requestIP === "127.0.0.1" ||
 		requestIP === "::1" ||
+		requestIP === "::ffff:100.64.0.4" ||
 		requestIP.includes("localhost")
 	) {
 		next();
