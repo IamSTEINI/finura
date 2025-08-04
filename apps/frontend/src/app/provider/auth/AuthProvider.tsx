@@ -30,7 +30,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 			console.log("Authenticating for route " + window.location.pathname);
 			const token = localStorage.getItem("DO_NOT_SHARE_SESSION_TOKEN");
 
-			fetch(redisServiceUrl+"/api/auth/me", {
+			fetch("https://finura-redis-service-production.up.railway.app"+"/api/auth/me", {
 				method: "POST",
 				headers: {
 					Authorization: `Bearer ${token}`,
