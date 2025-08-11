@@ -1,5 +1,10 @@
 FROM node:20-bullseye
-RUN apt-get update && apt-get install -y golang && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
+RUN wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
+RUN tar -C /usr/local -xzf go1.21.0.linux-amd64.tar.gz
+RUN rm go1.21.0.linux-amd64.tar.gz
+ENV PATH=$PATH:/usr/local/go/bin
 
 RUN npm install -g typescript
 WORKDIR /app
