@@ -1,6 +1,6 @@
 module playground
 
-go 1.24.4
+go 1.19
 
 require github.com/redis/go-redis/v9 v9.10.0
 

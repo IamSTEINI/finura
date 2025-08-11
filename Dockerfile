@@ -9,7 +9,7 @@ RUN cd apps/frontend && npm install
 RUN cd api && npm install
 RUN cd services/notification-service && npm install
 
-RUN cd services/redis-service && go mod download
+RUN cd services/redis-service && go mod tidy && go mod download
 
 RUN chmod +x start.sh
 
