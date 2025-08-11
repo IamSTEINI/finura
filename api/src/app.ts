@@ -14,7 +14,9 @@ app.use(cors({
     const allowedOrigins = [
       'http://localhost',
       'http://localhost:3000',
-      "185.141.216.228"
+      "http://185.141.216.228",
+      "http://185.141.216.228:3000",
+      "*"
     ];
     if (!origin || allowedOrigins.includes(origin) || /\.railway\.app$/.test(origin)) {
       callback(null, true);
