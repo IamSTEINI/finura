@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: https://github.com/IamSTEINI/finura.git
+    ports:
+      - "3000:3000"
+      - "8001:8001"
+      - "8500:8500"
+      - "10000:10000"
+      - "6379:6379"
