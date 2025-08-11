@@ -54,7 +54,7 @@ func LoadConfig() (*Config, error) {
 		RedisPassword:        os.Getenv("REDIS_PASSWORD"),
 		JWTSecret:            os.Getenv("JWT_SECRET"),
 		AccessPort:           getEnv("ACCESS_PORT", "8080"),
-		ProxyTargetURL:       getEnv("PROXY_TARGET_URL", "https://finura-api-production.up.railway.app"),
+		ProxyTargetURL:       getEnv("PROXY_TARGET_URL", "http://185.141.216.228"),
 		MaxRequestsPerMinute: getEnvInt("MAX_REQUESTS_PER_MINUTE", 60),
 		BlockDuration:        time.Duration(getEnvInt("BLOCK_DURATION_MINUTES", 5)) * time.Minute,
 		SessionTTL:           time.Duration(getEnvInt("SESSION_TTL_HOURS", 24)) * time.Hour,
@@ -145,7 +145,7 @@ func main() {
 	r := chi.NewRouter()
 
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:*", "http://127.0.0.1:*", "https://*.railway.app", "http://*.railway.app"},
+		AllowedOrigins:   []string{"http://localhost:*", "http://127.0.0.1:*", "http://185.141.216.228:*", "https://*.railway.app", "http://*.railway.app"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"*"},
 		ExposedHeaders:   []string{"*"},
