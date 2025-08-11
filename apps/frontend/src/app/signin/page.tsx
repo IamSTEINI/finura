@@ -44,10 +44,10 @@ function SignIn() {
 				return;
 			}
 
-			console.log("Attempting login req to:", "http://localhost:10000/noauth/auth/login/");
+			console.log("Attempting login req to:", "http://185.141.216.228:8001/noauth/auth/login/");
 
 			const response = await fetch(
-				"http://localhost:8001/noauth/auth/login/",
+				"http://185.141.216.228:8001/noauth/auth/login/",
 				{
 					method: "POST",
 					headers: {

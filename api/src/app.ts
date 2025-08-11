@@ -18,6 +18,7 @@ app.use(cors({
       "http://185.141.216.228:3000",
       "*"
     ];
+    //TODO: FIX CORS FETCH FAILED
     if (!origin || allowedOrigins.includes(origin) || /\.railway\.app$/.test(origin)) {
       callback(null, true);
     } else {
