@@ -13,10 +13,10 @@ RUN cd services/redis-service && go mod download
 
 RUN chmod +x start.sh
 
-EXPOSE 3000   # frontend Next.js
-EXPOSE 10000  # api
-EXPOSE 8001   # redis-service
-EXPOSE 8500   # notification-service
-EXPOSE 6379   # redis
+EXPOSE 3000
+EXPOSE 10000
+EXPOSE 8001
+EXPOSE 8500
+EXPOSE 6379
 
 CMD ["./start.sh"]
