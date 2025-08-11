@@ -47,7 +47,7 @@ function SignIn() {
 			console.log("Attempting login req to:", "http://localhost:10000/noauth/auth/login/");
 
 			const response = await fetch(
-				"https://finura-api-production.up.railway.app/noauth/auth/login/",
+				"http://localhost:8001/noauth/auth/login/",
 				{
 					method: "POST",
 					headers: {
