@@ -27,7 +27,7 @@ function Dashboard() {
 	const [error, setError] = useState<string | null>(null);
 	const { t } = useLocale();
 	const redisServiceUrl =
-		process.env.REDIS_SERVICE_URL || "http://localhost:8001";
+		process.env.REDIS_SERVICE_URL || "http://185.141.216.228:8001";
 
 	const fetchInvoices = async () => {
 		setLoading(true);

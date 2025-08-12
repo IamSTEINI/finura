@@ -30,7 +30,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 			console.log("Authenticating for route " + window.location.pathname);
 			const token = localStorage.getItem("DO_NOT_SHARE_SESSION_TOKEN");
 
-			fetch("localhost:8001"+"/api/auth/me", {
+			fetch("http://185.141.216.228:8001"+"/api/auth/me", {
 				method: "POST",
 				headers: {
 					Authorization: `Bearer ${token}`,

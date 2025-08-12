@@ -26,7 +26,7 @@ function CompanySettings() {
 	const [company, setCompany] = useState<Company | null>(null);
 	const [success, setSuccess] = useState<string | null>(null);
 	const redisServiceUrl =
-		process.env.REDIS_SERVICE_URL || "http://localhost:8001";
+		process.env.REDIS_SERVICE_URL || "http://185.141.216.228:8001";
 	useEffect(() => {
 		const fetchCompany = async () => {
 			const token = localStorage.getItem("DO_NOT_SHARE_SESSION_TOKEN");
