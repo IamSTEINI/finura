@@ -47,7 +47,7 @@ function SignIn() {
 			console.log("Attempting login req to:", "http://185.141.216.228:8001/noauth/auth/login/");
 
 			const response = await fetch(
-				"http://185.141.216.228:8001/noauth/auth/login/",
+				"http://185.141.216.228:10000/noauth/auth/login/",
 				{
 					method: "POST",
 					headers: {
@@ -61,7 +61,14 @@ function SignIn() {
 				}
 			);
 
-			const data = await response.json();
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			let data: any = {};
+			const contentType = response.headers.get("content-type");
+			if (contentType && contentType.includes("application/json")) {
+				data = await response.json();
+			} else {
+				data = { message: await response.text() };
+			}
 			console.log("Response data:", data);
 
 			if (!response.ok) {
