@@ -14,8 +14,10 @@ app.use(cors({
     const allowedOrigins = [
       'http://localhost',
       'http://localhost:3000',
+      'http://localhost:10000',
       "http://185.141.216.228",
       "http://185.141.216.228:3000",
+      "http://185.141.216.228:10000",
       "*"
     ];
     //TODO: FIX CORS FETCH FAILED
