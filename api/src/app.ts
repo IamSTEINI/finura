@@ -8,7 +8,30 @@ import { createOrUpdateAdminUser } from './utils/admin/createAdminUser'
 import { monitorUserStatus } from './utils/utils/monitorUserStatus'
 
 const app = express()
-app.use(cors({ origin: '*', credentials: true }));
+
+app.use(cors({
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'http://localhost',
+      'http://localhost:3000',
+      'http://localhost:10000',
+      "http://185.141.216.228",
+      "http://185.141.216.228:3000",
+      "http://185.141.216.228:10000",
+      "http://185.141.216.228",
+      "*"
+    ];
+    //TODO: FIX CORS FETCH FAILED
+    if (!origin || allowedOrigins.includes(origin) || /\.railway\.app$/.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin']
+}))
 app.use(express.json())
 app.use(loggingHandler)
 
