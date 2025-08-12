@@ -54,7 +54,7 @@ func LoadConfig() (*Config, error) {
 		RedisPassword:        os.Getenv("REDIS_PASSWORD"),
 		JWTSecret:            os.Getenv("JWT_SECRET"),
 		AccessPort:           getEnv("ACCESS_PORT", "8080"),
-		ProxyTargetURL:       getEnv("PROXY_TARGET_URL", "http://185.141.216.228"),
+		ProxyTargetURL:       getEnv("PROXY_TARGET_URL", "http://185.141.216.228:10000"),
 		MaxRequestsPerMinute: getEnvInt("MAX_REQUESTS_PER_MINUTE", 60),
 		BlockDuration:        time.Duration(getEnvInt("BLOCK_DURATION_MINUTES", 5)) * time.Minute,
 		SessionTTL:           time.Duration(getEnvInt("SESSION_TTL_HOURS", 24)) * time.Hour,
