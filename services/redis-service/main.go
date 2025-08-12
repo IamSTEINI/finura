@@ -145,7 +145,7 @@ func main() {
 	r := chi.NewRouter()
 
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:*", "http://127.0.0.1:*", "http://185.141.216.228:*", "https://*.railway.app", "http://*.railway.app"},
+		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"*"},
 		ExposedHeaders:   []string{"*"},
