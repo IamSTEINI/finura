@@ -26,7 +26,7 @@
 
 	--button-background-color-primary: #825494;
 	--button-text-color-primary: #fff;
-	--button-background-glow: #825494;
+	--button-background-glow: #855494;
 	--button-bonly-color: #000;
 
 	--input-border-color-primary: #160c1a;
@@ -63,7 +63,7 @@
 @media (prefers-color-scheme: dark) {
 	:root:not([data-theme="light"]) {
 		--background-color: #251e25;
-		--button-background-color-primary: #825494;
+		--button-background-color-primary: #78338d;
 		--button-text-color-primary: #fff;
 		--button-background-glow: #825494;
 		--button-bonly-color: #fff;

@@ -129,7 +129,7 @@ function SimpleStat({
 						}
 					})()}
 				</div>
-				<div className="text-sm text-gray-500">{title}</div>
+				<div className="text-sm text-gray-500 text-nowrap">{title}</div>
 			</div>
 		</div>
 	);

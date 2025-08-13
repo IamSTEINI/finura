@@ -65,7 +65,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
 								closeConnection("notification-pipe");
 
-								const wsUrl = "ws://127.0.0.1:8500/";
+								const wsUrl = "ws://185.141.216.228:8500/";
 								const token = localStorage.getItem(
 									"DO_NOT_SHARE_SESSION_TOKEN"
 								);

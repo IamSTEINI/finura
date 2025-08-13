@@ -10,23 +10,23 @@ function Header() {
 
 	const navLinks = [
 		{ href: "/features", text: t("general.features") },
-		{ href: "/solutions", text: t("general.solutions") },
 		{ href: "/pricing", text: t("general.pricing") },
 		{ href: "/what-is-finura", text: t("general.what_is_finura") },
 	];
 	return (
 		<motion.div
-			className="fixed top-0 h-[60px] overflow-hidden w-full flex flex-row justify-center items-center"
+			className="fixed top-0 h-[60px] z-[999] overflow-hidden w-full flex flex-row justify-center items-center"
 			initial={{ y: -60 }}
 			animate={{ y: 0 }}
 			transition={{ duration: 0.25, ease: "easeOut" }}>
 			<div className="card z-[99999] h-[80%] w-[95%] max-w-[1200px] px-5 py-2 overflow-hidden flex flex-row justify-between items-center">
-				<div className="w-fit min-w-[50px]">
+				<div className="w-fit min-w-[50px]" onClick={()=>{window.location.href = "/"}}>
 					<Image
 						src={"/finura/icon.ico"}
 						width={35}
 						height={35}
 						alt="Logo"
+						className="cursor-pointer"
 					/>
 				</div>
 				<div className="w-full h-full flex flex-row items-center justify-end gap-x-10">
@@ -45,7 +45,7 @@ function Header() {
 							<MenuIcon />
 						</span>
 					</>
-					<button className="btn-shiny hidden md:block">
+					<button className="btn-shiny hidden md:block" onClick={()=>{window.location.href = '/get-started'}}>
 						{t("general.get_started")}
 					</button>
 				</div>
@@ -76,7 +76,7 @@ function Header() {
 										{link.text}
 									</a>
 								))}
-								<button className="btn-shiny mt-4">
+								<button className="btn-shiny mt-4" onClick={() => (window.location.href = "/get-started")}>
 									{t("general.get_started")}
 								</button>
 							</div>

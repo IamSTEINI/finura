@@ -452,13 +452,13 @@ function Invoices() {
 							opacity={0.5}
 						/>
 					)}
-					<DropDown
+					{/* <DropDown
 						data={[{ label: "Template 1", value: "templateID" }]}
 						selected={selectedTemplate}
 						onChange={setSelectedTemplate}
 						searchable={true}
 						placeholder={t("invoices.choose_template")}
-					/>
+					/> */}
 					<button
 						onClick={() => setNewInvoiceWindow(true)}
 						className="px-4 py-2 rounded hover:opacity-90">

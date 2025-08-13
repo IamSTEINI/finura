@@ -726,16 +726,16 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) Logout(w http.ResponseWriter, r *http.Request) {
-	ip := getClientIP(r)
-	allowedIPs := map[string]bool{
-		"127.0.0.1": true,
-		"::1":       true,
-		"[::1]":     true,
-	}
-	if !allowedIPs[ip] {
-		http.Error(w, "Forbidden", http.StatusForbidden)
-		return
-	}
+	// ip := getClientIP(r)
+	// allowedIPs := map[string]bool{
+	// 	"127.0.0.1": true,
+	// 	"::1":       true,
+	// 	"[::1]":     true,
+	// }
+	// if !allowedIPs[ip] {
+	// 	http.Error(w, "Forbidden", http.StatusForbidden)
+	// 	return
+	// }
 	sessionID, ok := r.Context().Value("session_id").(string)
 	if !ok {
 		http.Error(w, "Session context missing", http.StatusInternalServerError)

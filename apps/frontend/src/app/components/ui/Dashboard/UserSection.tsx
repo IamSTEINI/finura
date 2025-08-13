@@ -31,6 +31,8 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 	const { theme, setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
 	const { addNotification } = useNotification();
+	const redisServiceUrl =
+		process.env.REDIS_SERVICE_URL || "http://185.141.216.228:8001";
 
 	useEffect(() => {
 		setMounted(true);
@@ -53,6 +55,20 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, []);
+
+	const handleLogOut = async () => {
+		const token = window.localStorage.getItem("DO_NOT_SHARE_SESSION_TOKEN");
+		await fetch(redisServiceUrl + "/api/logout", {
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
+			},
+		});
+		window.localStorage.removeItem("DO_NOT_SHARE_SESSION_TOKEN");
+		window.localStorage.removeItem("DO_NOT_SHARE_SESSION_REFRESH_TOKEN");
+		window.location.reload();
+	};
 
 	if (!mounted) return null;
 
@@ -196,7 +212,9 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 							</div>
 						)}
 						<div className="border-t sidebar-border-color flex flex-col">
-							<button className="btn-text-only-l mt-1 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
+							<button
+								onClick={() => handleLogOut()}
+								className="btn-text-only-l mt-1 btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
 								<LogOut size={18} opacity={0.6} />
 								{t("dashboard.sidebar_menu_logout")}
 							</button>

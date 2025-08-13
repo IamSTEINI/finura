@@ -362,7 +362,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({
 				}}
 				onClick={(e) => e.stopPropagation()}
 				className="w-full h-full flex items-center justify-center">
-				<Card className="w-[80%] max-w-[900px] md:w-3/4 -translate-x-22 max-h-[1000px] overflow-y-scroll">
+				<Card className="w-[80%] max-w-[900px] md:w-3/4 -translate-x-22 max-h-[800px] overflow-y-scroll">
 					<div className="flex flex-row justify-between items-center pb-1">
 						<h2>{t("invoices.form.create_new_invoice")}</h2>
 						<X
