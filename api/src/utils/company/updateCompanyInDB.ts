@@ -22,34 +22,73 @@ export async function updateCompanyInDB(
 	data: Partial<Company>
 ): Promise<Company | null> {
 	try {
-		const updates: string[] = [];
-		const values: any[] = [];
-		let idx = 1;
-		for (const key in data) {
-			if (key === "id") continue;
-			if (
-				data[key as keyof Company] !== undefined &&
-				fieldMap[key as keyof Company]
-			) {
-				updates.push(`${fieldMap[key as keyof Company]} = $${idx}`);
-				values.push(data[key as keyof Company]);
-				idx++;
+		const existingCompany = await query(
+			"SELECT id FROM company WHERE id = 1"
+		);
+
+		if (existingCompany.rows.length === 0) {
+			const insertFields: string[] = [];
+			const insertPlaceholders: string[] = [];
+			const insertValues: any[] = [];
+			let idx = 1;
+
+			for (const key in data) {
+				if (key === "id") continue;
+				if (
+					data[key as keyof Company] !== undefined &&
+					fieldMap[key as keyof Company]
+				) {
+					insertFields.push(fieldMap[key as keyof Company]);
+					insertPlaceholders.push(`$${idx}`);
+					insertValues.push(data[key as keyof Company]);
+					idx++;
+				}
 			}
+
+			if (insertFields.length === 0) {
+				throw new Error("No valid fields to insert");
+			}
+
+			const insertSql = `INSERT INTO company (id, ${insertFields.join(
+				", "
+			)}) VALUES (1, ${insertPlaceholders.join(", ")}) RETURNING *`;
+			console.log(insertSql, insertValues);
+			const insertResult = await query(insertSql, insertValues);
+			return insertResult.rows[0] as Company;
+		} else {
+			const updates: string[] = [];
+			const values: any[] = [];
+			let idx = 1;
+
+			for (const key in data) {
+				if (key === "id") continue;
+				if (
+					data[key as keyof Company] !== undefined &&
+					fieldMap[key as keyof Company]
+				) {
+					updates.push(`${fieldMap[key as keyof Company]} = $${idx}`);
+					values.push(data[key as keyof Company]);
+					idx++;
+				}
+			}
+
+			if (updates.length === 0) {
+				throw new Error("No valid fields to update");
+			}
+
+			const updateSql = `UPDATE company SET ${updates.join(
+				", "
+			)} WHERE id = 1 RETURNING *`;
+			console.log(updateSql, values);
+			const updateResult = await query(updateSql, values);
+
+			if (updateResult.rows.length === 0) {
+				return null;
+			}
+			return updateResult.rows[0] as Company;
 		}
-		if (updates.length === 0) {
-			throw new Error("No valid fields to update");
-		}
-		const sql = `UPDATE company SET ${updates.join(
-			", "
-		)} WHERE id = 1 RETURNING *`;
-		console.log(sql, values);
-		const result = await query(sql, values);
-		if (result.rows.length === 0) {
-			return null;
-		}
-		return result.rows[0] as Company;
 	} catch (error) {
-		console.error("Error updating company info:", error);
+		console.error("Error updating/inserting company info:", error);
 		return null;
 	}
 }
