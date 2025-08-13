@@ -158,7 +158,7 @@ function Features() {
 										<h4 className="text-2xl font-bold mb-3 bg-gradient-to-r from-pink-400 to-purple-600 bg-clip-text text-transparent">
 											{feature.title}
 										</h4>
-										<p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+										<p className="leading-relaxed mb-4">
 											{feature.description}
 										</p>
 										<div className="grid grid-cols-2 gap-2">
@@ -204,7 +204,7 @@ function Features() {
 								<h4 className="text-xl font-semibold">
 									{feature.title}
 								</h4>
-								<p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+								<p className="text-sm leading-relaxed">
 									{feature.description}
 								</p>
 							</div>

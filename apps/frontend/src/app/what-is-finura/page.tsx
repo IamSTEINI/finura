@@ -95,7 +95,7 @@ function WhatsFinura() {
 						<h4 className="text-xl font-semibold">
 							Lightning Fast
 						</h4>
-						<p className="text-gray-600 dark:text-gray-300">
+						<p className="">
 							Redis + Websockets for real-time performance and
 							instant feedback.
 						</p>
@@ -105,7 +105,7 @@ function WhatsFinura() {
 							<Lock />
 						</div>
 						<h4 className="text-xl font-semibold">Privacy First</h4>
-						<p className="text-gray-600 dark:text-gray-300">
+						<p className="">
 							Self-hosted. No data collection. Your info never
 							leaves your server.
 						</p>
@@ -117,7 +117,7 @@ function WhatsFinura() {
 						<h4 className="text-xl font-semibold">
 							Scales With You
 						</h4>
-						<p className="text-gray-600 dark:text-gray-300">
+						<p className="">
 							Microservices architecture. Easy to add services.
 						</p>
 					</div>

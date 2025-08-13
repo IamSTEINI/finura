@@ -165,7 +165,7 @@ function Pricing() {
 								<h3 className="text-2xl font-bold bg-gradient-to-r from-pink-400 to-purple-600 bg-clip-text text-transparent">
 									{plan.name}
 								</h3>
-								<p className="text-gray-600 dark:text-gray-300 text-sm">
+								<p className="text-sm">
 									{plan.description}
 								</p>
 								<div className="space-y-2">
@@ -255,7 +255,7 @@ function Pricing() {
 								<h4 className="text-xl font-semibold">
 									{feature.title}
 								</h4>
-								<p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+								<p className="text-sm leading-relaxed">
 									{feature.description}
 								</p>
 							</div>
