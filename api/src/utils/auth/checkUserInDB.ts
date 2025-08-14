@@ -7,7 +7,7 @@ export async function checkUserInDB(
 ): Promise<{ id: string; username: string; email: string } | null> {
 	try {
 		const result = await query(
-			"SELECT id, username, email, password_hash FROM users WHERE username = $1 OR email = $1",
+			"SELECT id, username, email, password_hash FROM users WHERE LOWER(username) = LOWER($1) OR LOWER(email) = LOWER($1)",
 			[usernameoremail]
 		);
 

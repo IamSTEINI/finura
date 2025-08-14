@@ -34,7 +34,7 @@ function WhatsFinura() {
 				}}>
 				FINURA
 			</h5>
-			<div className="flex flex-row gap-x-4 items-center">
+			<div className="flex flex-row gap-x-4 items-center sm:flex-nowrap flex-wrap justify-center">
 				<Image src={"/finura/FINURA_FAST.png"} alt="Finura fast logo" width={120} height={100}/>
 				<Image src={"/finura/FINURA_EFFICIENT.png"} alt="Finura fast logo" width={200} height={100}/>
 				<Image src={"/finura/FINURA_EASY.png"} alt="Finura fast logo" width={120} height={140} className="mt-1.5"/>

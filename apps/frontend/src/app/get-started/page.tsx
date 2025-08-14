@@ -18,9 +18,9 @@ function GetStarted() {
 	const scale = Math.max(1 - scrollY / 600, 0.6);
 	const opacity = Math.max(1 - scrollY / 400, 0.5);
 	return (
-		<div className="w-full min-h-screen flex flex-col space-y-2 justify-start items-center px-5 overflow-y-scroll">
+		<div className="w-full min-h-screen flex flex-col space-y-2 justify-start items-center px-3 sm:px-5 overflow-y-scroll">
 			<Header />
-			<div className="w-[70%] h-fit">
+			<div className="sm:w-[70%] w-[90%] h-fit">
 				<h5
 					className="w-full mt-[500px] font-bold transition-transform duration-300 flex justify-center items-center"
 					style={{

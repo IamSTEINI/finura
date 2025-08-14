@@ -86,36 +86,42 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 				}}
 				className="p-4 border-t sidebar-border-color select-none hover:backdrop-brightness-75 cursor-pointer">
 				<div
-					className={`flex items-center space-x-3 ${
-						isCollapsed ? "justify-center" : "justify-start"
+					className={`flex items-center space-x-3 w-full ${
+						isCollapsed
+							? "justify-center"
+							: "sm:justify-start justify-between"
 					}`}>
-					<div className="min-w-8 w-8 min-h-8 h-8 bg-gray-500 rounded-full overflow-hidden flex items-center justify-center">
-						<Image
-							width={500}
-							height={500}
-							src={"/img/" + userObj.profile_picture}
-							alt=""
-							className="w-full h-full object-cover"
-							style={{ objectFit: "cover" }}
-						/>
+					<div className="flex flex-row items-center gap-x-2">
+						<div className="min-w-8 w-8 min-h-8 h-8 bg-gray-500 rounded-full overflow-hidden flex items-center justify-center">
+							<Image
+								width={500}
+								height={500}
+								src={"/img/" + userObj.profile_picture}
+								alt=""
+								className="w-full h-full object-cover"
+								style={{ objectFit: "cover" }}
+							/>
+						</div>
+						<AnimatePresence initial={false}>
+							{!isCollapsed && (
+								<motion.div
+									initial={{ opacity: 0, width: 0 }}
+									animate={{ opacity: 1, width: "auto" }}
+									exit={{ opacity: 0, width: 0 }}
+									transition={{ duration: 0.2 }}
+									className="truncate">
+									<p className="text-md font-medium truncate max-w-[90%] min-w-[100px]">
+										{userObj.firstname} {userObj.lastname}
+									</p>
+									<p className="text-xs dashboard-text opacity-75">
+										{t(
+											"dashboard.sidebar_role_adminstrator"
+										)}
+									</p>
+								</motion.div>
+							)}
+						</AnimatePresence>
 					</div>
-					<AnimatePresence initial={false}>
-						{!isCollapsed && (
-							<motion.div
-								initial={{ opacity: 0, width: 0 }}
-								animate={{ opacity: 1, width: "auto" }}
-								exit={{ opacity: 0, width: 0 }}
-								transition={{ duration: 0.2 }}
-								className="truncate">
-								<p className="text-md font-medium truncate max-w-[90%] min-w-[100px]">
-									John Doe
-								</p>
-								<p className="text-xs dashboard-text opacity-75">
-									{t("dashboard.sidebar_role_adminstrator")}
-								</p>
-							</motion.div>
-						)}
-					</AnimatePresence>
 					{!isCollapsed && (
 						<Settings size={20} opacity={0.6} className="ml-10" />
 					)}
@@ -129,7 +135,7 @@ const DashboardUser: React.FC<DashboardUserProps> = ({ isCollapsed }) => {
 						animate={{ opacity: 1, scale: 1 }}
 						exit={{ opacity: 0, scale: 0.9 }}
 						transition={{ duration: 0.2 }}
-						className="absolute bottom-20 ml-20 card flex flex-col w-fit z-[99999]">
+						className="absolute bottom-20 ml-0 sm:ml-20 card flex flex-col z-[99999] w-full sm:mx-0 sm:w-fit">
 						<div className="border-b sidebar-border-color pb-1 gap-x-2 flex flex-row items-start justify-start w-full">
 							<div className="min-w-8 w-8 min-h-8 h-8 bg-gray-500 mt-1 rounded-full overflow-hidden flex items-center justify-center">
 								<Image

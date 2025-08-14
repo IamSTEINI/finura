@@ -18,7 +18,7 @@ const loginHandler: RequestHandler = async (req, res) => {
 			throw new Error("LOGIN_INVALID_INPUT_TYPE");
 		}
 
-		const sanitizedUnameOrEmail = unameoremail.trim();
+		const sanitizedUnameOrEmail = unameoremail.trim().toLocaleLowerCase();
 		const sanitizedPassword = password;
 		req.body.unameoremail = sanitizedUnameOrEmail;
 		req.body.password = sanitizedPassword;

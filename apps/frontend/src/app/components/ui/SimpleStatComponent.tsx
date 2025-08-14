@@ -65,7 +65,7 @@ function SimpleStat({
 }: SimpleStatProps) {
 	return (
 		<div
-			className={`flex items-center space-x-4 card ${className}`}
+			className={`flex items-center space-x-4 card overflow-hidden min-w-fit ${className}`}
 			style={{
 				borderColor: colorTheme ? colorTheme : "",
 				paddingRight: "15px",

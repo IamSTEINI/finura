@@ -123,7 +123,7 @@ const DropDown: React.FC<DropDownProps> = ({
 				</svg>
 			</button>
 			{open && (
-				<div className={`absolute left-0 w-full mt-2 bg-white border dropdown overflow-hidden rounded-lg shadow-lg z-50 ${listClassName}`}>
+				<div className={`absolute left-0 w-full mt-2 bg-white border dropdown overflow-hidden rounded-lg shadow-lg z-[99] ${listClassName}`}>
 					{searchable && (
 						<input
 							autoFocus

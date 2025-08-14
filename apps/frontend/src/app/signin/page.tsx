@@ -123,7 +123,7 @@ function SignIn() {
 							animate={{ x: 0, opacity: 1 }}
 							exit={{ x: "-100%", opacity: 0 }}
 							transition={{ duration: 0.3 }}
-							className="md:w-[50%] md:max-w-[700px] min-w-[400px] w-full card flex flex-col space-y-2 items-center"
+							className="md:w-[50%] md:max-w-[700px] min-w-[300px] w-full card flex flex-col space-y-2 items-center"
 							style={{ padding: "24px" }}>
 							<h1 className="truncate w-full">
 								{t("general.sign_in_page_title").replace(
@@ -170,7 +170,7 @@ function SignIn() {
 							animate={{ x: 0, opacity: 1 }}
 							exit={{ x: "100%", opacity: 0 }}
 							transition={{ duration: 0.3 }}
-							className="md:w-[50%] md:max-w-[700px] min-w-[400px] w-full card flex flex-col space-y-2 items-center"
+							className="md:w-[50%] md:max-w-[700px] min-w-[300px] w-full card flex flex-col space-y-2 items-center"
 							style={{ padding: "24px" }}>
 							<h1 className="truncate w-full">
 								{t(
@@ -239,7 +239,7 @@ function SignIn() {
 				<span className="opacity-50">
 					{t("general.dont_have_finura")}
 				</span>
-				<a href="/setup">{t("general.get_finura")}</a>
+				<a href="/get-started">{t("general.get_finura")}</a>
 			</div>
 
 			<Footer />

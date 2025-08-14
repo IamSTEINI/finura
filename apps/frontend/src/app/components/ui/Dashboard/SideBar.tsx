@@ -5,6 +5,7 @@ import {
 	// Contact,
 	FileText,
 	Home,
+	X,
 	// Package,
 	// Receipt,
 	// Send,
@@ -29,6 +30,7 @@ export const Sidebar = ({
 	isCollapsed,
 	currentSelectedTab = "Dashboard",
 	onChange,
+	setIsCollapsed,
 }: SidebarProps) => {
 	const { t } = useLocale();
 	const menuItems = [
@@ -48,9 +50,21 @@ export const Sidebar = ({
 	return (
 		<motion.div
 			initial={false}
-			animate={{ width: isCollapsed ? "4rem" : "16rem" }}
+			animate={{
+				width: isCollapsed
+					? window.innerWidth >= 768
+						? "4rem"
+						: "0rem"
+					: window.innerWidth >= 768
+					? "16rem"
+					: "100%",
+			}}
 			transition={{ duration: 0.3, ease: "easeInOut" }}
-			className={`sidebar h-screen flex flex-col relative`}>
+			className={`
+		sidebar h-screen flex flex-col relative
+		${isCollapsed ? "w-0 md:w-16" : "w-64"} 
+		overflow-hidden
+	`}>
 			<div className="h-[50px] min-h-[50px] max-h-[50px] border-b sidebar-border-color flex items-center justify-between">
 				<div className="flex items-center w-full h-full space-x-3">
 					<div className="w-8 min-w-8 h-8 min-h-8 ml-4 flex items-center justify-center">
@@ -60,6 +74,13 @@ export const Sidebar = ({
 							width={100}
 							height={100}
 						/>
+					</div>
+					<div className="w-full flex flex-row items-center justify-end">
+						<button
+							className="btn-text-only block sm:hidden"
+							onClick={() => setIsCollapsed(!isCollapsed)}>
+							<X />
+						</button>
 					</div>
 					{/* <AnimatePresence initial={false}>
 						{!isCollapsed && (

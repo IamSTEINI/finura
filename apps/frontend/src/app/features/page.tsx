@@ -107,7 +107,7 @@ function Features() {
 	];
 
 	return (
-		<div className="w-full min-h-screen flex flex-col space-y-2 justify-start items-center px-5 overflow-y-scroll">
+		<div className="w-full min-h-screen flex flex-col space-y-2 justify-start items-center sm:px-5 px-3 overflow-y-scroll">
 			<Header />
 			<h5
 				className="w-full mt-[500px] font-bold transition-transform duration-300 flex justify-center items-center"
@@ -123,7 +123,7 @@ function Features() {
 				FEATURES
 			</h5>
 
-			<div className="max-w-6xl mx-auto space-y-16 px-6 py-20">
+			<div className="max-w-6xl mx-auto space-y-16 sm:px-6 px-3 py-20">
 				<div className="text-center space-y-6">
 					<h2 className="text-5xl font-bold bg-gradient-to-r from-pink-400 to-purple-600 bg-clip-text text-transparent">
 						Everything Your Business Needs

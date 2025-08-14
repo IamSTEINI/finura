@@ -16,7 +16,7 @@ import {
 	ChevronLeft,
 	ChevronRight,
 } from "lucide-react";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useLocale } from "@/context/LocaleContext";
 import { useNotification } from "@/context/NotificationContext";
@@ -43,13 +43,20 @@ function Invoices() {
 	const [selectedCustomer, setSelectedCustomer] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const [notesModal, setNotesModal] = useState<{
+		isOpen: boolean;
+		invoice: Invoice | null;
+	}>({
+		isOpen: false,
+		invoice: null,
+	});
 	const INVOICES_PER_PAGE = 10;
 	const { t } = useLocale();
 	const { addNotification } = useNotification();
 	const redisServiceUrl =
 		process.env.REDIS_SERVICE_URL || "http://185.141.216.228:8001";
 
-	const fetchInvoices = async () => {
+	const fetchInvoices = useCallback(async () => {
 		setLoading(true);
 		setError(null);
 		const token = localStorage.getItem("DO_NOT_SHARE_SESSION_TOKEN");
@@ -61,7 +68,7 @@ function Invoices() {
 		}
 
 		try {
-			const response = await fetch(redisServiceUrl+"/api/invoices", {
+			const response = await fetch(redisServiceUrl + "/api/invoices", {
 				method: "GET",
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -142,11 +149,11 @@ function Invoices() {
 		} finally {
 			setLoading(false);
 		}
-	};
+	}, [redisServiceUrl, t]);
 
 	React.useEffect(() => {
 		fetchInvoices();
-	}, []);
+	}, [fetchInvoices]);
 
 	const filteredInvoices = useMemo(() => {
 		let filtered = [...invoices];
@@ -267,7 +274,7 @@ function Invoices() {
 		}
 
 		try {
-			const response = await fetch(redisServiceUrl+"/api/invoices", {
+			const response = await fetch(redisServiceUrl + "/api/invoices", {
 				method: "POST",
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -312,7 +319,7 @@ function Invoices() {
 
 		try {
 			const response = await fetch(
-				redisServiceUrl+`/api/invoices/${invoiceId}`,
+				redisServiceUrl + `/api/invoices/${invoiceId}`,
 				{
 					method: "DELETE",
 					headers: {
@@ -330,7 +337,7 @@ function Invoices() {
 
 			const result = await response.json();
 			console.log("Invoice deleted:", result);
-			addNotification(t("invoices.deleted_invoice"), "FINURA")
+			addNotification(t("invoices.deleted_invoice"), "FINURA");
 			fetchInvoices();
 		} catch (err) {
 			console.error("Failed to delete invoice:", err);
@@ -338,6 +345,20 @@ function Invoices() {
 		} finally {
 			setLoading(false);
 		}
+	};
+
+	const handleOpenNotes = (invoice: Invoice) => {
+		setNotesModal({
+			isOpen: true,
+			invoice: invoice,
+		});
+	};
+
+	const handleCloseNotes = () => {
+		setNotesModal({
+			isOpen: false,
+			invoice: null,
+		});
 	};
 
 	//! TAX NUMBER, THE OWN ADDRESS WILL BE ADDED IN CREATION OF IT, GETTING IT FROM THE API DIRECTLY
@@ -402,8 +423,10 @@ function Invoices() {
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.25, delay: 0.25 }}
 				className="border-b border-color mb-2 pb-2 flex flex-row flex-wrap items-center justify-between">
-				<h2>{t("invoices.title")} ({filteredInvoices.length})</h2>
-				<div className="flex flex-row items-center justify-center space-x-2 z-[0]">
+				<h2>
+					{t("invoices.title")} ({filteredInvoices.length})
+				</h2>
+				<div className="flex flex-row items-center justify-center space-x-2 z-[2]">
 					{selectedFilter !== "" && (
 						<FilterX
 							onClick={() => {
@@ -418,17 +441,35 @@ function Invoices() {
 					<DropDown
 						data={[
 							{ label: t("invoices.by_customer"), value: "byc" },
-							{ label: t("invoices.paid_invoices"), value: "paid" },
-							{ label: t("invoices.unpaid_invoices"), value: "unpaid" },
+							{
+								label: t("invoices.paid_invoices"),
+								value: "paid",
+							},
+							{
+								label: t("invoices.unpaid_invoices"),
+								value: "unpaid",
+							},
 							{ label: t("invoices.overdue"), value: "overdue" },
-							{ label: t("invoices.due_this_week"), value: "due_week" },
-							{ label: t("invoices.this_month"), value: "this_month" },
-							{ label: t("invoices.last_month"), value: "last_month" },
+							{
+								label: t("invoices.due_this_week"),
+								value: "due_week",
+							},
+							{
+								label: t("invoices.this_month"),
+								value: "this_month",
+							},
+							{
+								label: t("invoices.last_month"),
+								value: "last_month",
+							},
 							{
 								label: t("invoices.high_value"),
 								value: "high_value",
 							},
-							{ label: t("invoices.low_value"), value: "low_value" },
+							{
+								label: t("invoices.low_value"),
+								value: "low_value",
+							},
 						]}
 						selected={selectedFilter}
 						onChange={handleFilterChange}
@@ -462,7 +503,9 @@ function Invoices() {
 					<button
 						onClick={() => setNewInvoiceWindow(true)}
 						className="px-4 py-2 rounded hover:opacity-90">
-						{selectedTemplate ? t("invoices.create_invoice") : t("invoices.new_invoice")}
+						{selectedTemplate
+							? t("invoices.create_invoice")
+							: t("invoices.new_invoice")}
 					</button>
 				</div>
 			</motion.div>
@@ -472,11 +515,21 @@ function Invoices() {
 				transition={{ duration: 0.25, delay: 0.25 }}>
 				<thead>
 					<tr>
-						<th className="text-nowrap">{t("invoices.invoice_id")}</th>
-						<th className="text-nowrap">{t("invoices.customer")}</th>
-						<th className="text-nowrap">{t("invoices.date_issued")}</th>
-						<th className="text-nowrap">{t("invoices.due_date")}</th>
-						<th className="text-nowrap">{t("invoices.amount_gross")}</th>
+						<th className="text-nowrap">
+							{t("invoices.invoice_id")}
+						</th>
+						<th className="text-nowrap">
+							{t("invoices.customer")}
+						</th>
+						<th className="text-nowrap">
+							{t("invoices.date_issued")}
+						</th>
+						<th className="text-nowrap">
+							{t("invoices.due_date")}
+						</th>
+						<th className="text-nowrap">
+							{t("invoices.amount_gross")}
+						</th>
 						<th className="text-nowrap">{t("invoices.paid")}</th>
 						<th className="text-nowrap">{t("invoices.actions")}</th>
 					</tr>
@@ -500,7 +553,7 @@ function Invoices() {
 								{selectedFilter &&
 									t("invoices.try_changing_filter")}
 								<button
-								className="btn-text-only"
+									className="btn-text-only"
 									onClick={() => setNewInvoiceWindow(true)}>
 									{t("invoices.create_new_invoice")}
 								</button>
@@ -555,9 +608,11 @@ function Invoices() {
 											? "bg-green-500/30"
 											: "bg-red-500/30"
 									}>
-									{invoice.paid ? t("general.yes") : t("general.no")}
+									{invoice.paid
+										? t("general.yes")
+										: t("general.no")}
 								</td>
-								<td className="w-fit flex flex-row items-center justify-center">
+								<td className="w-fit flex flex-row items-center justify-center z-1">
 									{!invoice.paid &&
 									Math.floor(Date.now() / 1000) >
 										invoice.dueDate ? (
@@ -589,7 +644,9 @@ function Invoices() {
 											</button>
 										</ToolTip>
 									)}
-									<ToolTip tooltip={t("general.delete")} direction="top">
+									<ToolTip
+										tooltip={t("general.delete")}
+										direction="top">
 										<button
 											onClick={() =>
 												handleDeleteInvoice(invoice.id)
@@ -600,13 +657,30 @@ function Invoices() {
 										</button>
 									</ToolTip>
 
-									<ToolTip tooltip={t("general.notes")} direction="top">
-										<button className="btn-text-only-l btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
+									<ToolTip
+										tooltip={t("general.notes")}
+										direction="top">
+										<button
+											onClick={() =>
+												handleOpenNotes(invoice)
+											}
+											disabled={
+												!invoice.notes ||
+												invoice.notes.trim() === ""
+											}
+											className={`btn-text-only-l btn-sp flex flex-row items-center justify-start gap-x-5 transition-all ease-in ${
+												!invoice.notes ||
+												invoice.notes.trim() === ""
+													? "opacity-30 cursor-not-allowed"
+													: "opacity-75 hover:opacity-100"
+											}`}>
 											<FilePen size={18} />
 										</button>
 									</ToolTip>
 
-									<ToolTip tooltip={t("general.open")} direction="top">
+									<ToolTip
+										tooltip={t("general.open")}
+										direction="top">
 										<button className="btn-text-only-l btn-sp flex flex-row items-center justify-start gap-x-5 opacity-75 hover:opacity-100 transition-all ease-in">
 											<FileInput size={18} />
 										</button>
@@ -633,7 +707,8 @@ function Invoices() {
 						<ChevronLeft size={18} />
 					</button>
 					<span>
-						{t("general.page")} {currentPage} {t("general.of")} {totalPages}
+						{t("general.page")} {currentPage} {t("general.of")}{" "}
+						{totalPages}
 					</span>
 					<button
 						onClick={() =>
@@ -658,6 +733,42 @@ function Invoices() {
 				onSubmit={handleInvoiceSubmit}
 				invoices={invoices}
 			/>
+
+			{notesModal.isOpen && notesModal.invoice && (
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50"
+					onClick={handleCloseNotes}>
+					<motion.div
+						initial={{ scale: 0.9, opacity: 0 }}
+						animate={{ scale: 1, opacity: 1 }}
+						exit={{ scale: 0.9, opacity: 0 }}
+						className="card rounded-lg p-6 max-w-md w-full mx-4 shadow-xl"
+						onClick={(e) => e.stopPropagation()}>
+						<div className="flex justify-between items-center mb-4">
+							<h3 className="text-lg font-semibold">
+								{t("general.notes")} -{" "}
+								{notesModal.invoice.invoiceNumber}
+							</h3>
+						</div>
+						<div className="max-h-60 overflow-y-auto">
+							<p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+								{notesModal.invoice.notes ||
+									t("invoices.no_notes")}
+							</p>
+						</div>
+						<div className="mt-4 flex justify-end">
+							<button
+								onClick={handleCloseNotes}
+								className="px-4 py-2 rounded hover:opacity-90 btn-text-only">
+								{t("general.close")}
+							</button>
+						</div>
+					</motion.div>
+				</motion.div>
+			)}
 		</div>
 	);
 }

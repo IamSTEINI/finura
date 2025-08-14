@@ -83,7 +83,7 @@ const NotificationSection: React.FC<NotificationSectionProps> = ({
 							exit={{ opacity: 0, scale: 0.9 }}
 							transition={{ duration: 0.2 }}
 							onClick={(e) => e.stopPropagation()}
-							className="absolute top-16 right-0 card flex flex-col md:w-[350px] w-[370px] z-[9999]">
+							className="absolute top-16 sm:translate-x-0 translate-x-4 right-0 card flex flex-col md:w-[350px] w-[370px] z-[9999]">
 							<div className="flex flex-row justify-between items-center pb-1">
 								<h3>{t("dashboard.header_notifications")}</h3>
 								<div className="flex flex-row items-center space-x-2 justify-center">

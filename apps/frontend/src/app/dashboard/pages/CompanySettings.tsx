@@ -151,7 +151,7 @@ function CompanySettings() {
 
 	return (
 		<motion.div
-			className="p-6 max-w-4xl mx-auto"
+			className="md:p-6 p-1 max-w-4xl mx-auto"
 			initial="hidden"
 			animate="visible"
 			variants={containerVariants}>

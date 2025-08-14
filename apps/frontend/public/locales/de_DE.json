@@ -29,7 +29,8 @@
 		"open": "Öffnen",
 		"page": "Seite",
 		"of": "von",
-		"filter": "Filter"
+		"filter": "Filter",
+		"close": "Schließen"
 	},
 	"dashboard": {
 		"sidebar_dashboard": "Dashboard",
