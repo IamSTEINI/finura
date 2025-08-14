@@ -1,3 +1,4 @@
+"use client";
 import {
 	Cog,
 	// Calendar,
@@ -18,6 +19,7 @@ import Image from "next/image";
 import DashboardUser from "./UserSection";
 import ToolTip from "../Tooltip";
 import { useLocale } from "@/context/LocaleContext";
+import { useEffect, useState } from "react";
 
 interface SidebarProps {
 	isCollapsed: boolean;
@@ -47,17 +49,30 @@ export const Sidebar = ({
 	];
 	//const [selectedWorkSpace, setSelectedWorkspace] = useState("");
 
+	const [sidebarWidth, setSidebarWidth] = useState<string>("16rem");
+
+	useEffect(() => {
+		const handleResize = () => {
+			if (typeof window !== "undefined") {
+				if (isCollapsed) {
+					setSidebarWidth(window.innerWidth >= 768 ? "4rem" : "0rem");
+				} else {
+					setSidebarWidth(
+						window.innerWidth >= 768 ? "16rem" : "100%"
+					);
+				}
+			}
+		};
+		handleResize();
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, [isCollapsed]);
+
 	return (
 		<motion.div
 			initial={false}
 			animate={{
-				width: isCollapsed
-					? window.innerWidth >= 768
-						? "4rem"
-						: "0rem"
-					: window.innerWidth >= 768
-					? "16rem"
-					: "100%",
+				width: sidebarWidth,
 			}}
 			transition={{ duration: 0.3, ease: "easeInOut" }}
 			className={`

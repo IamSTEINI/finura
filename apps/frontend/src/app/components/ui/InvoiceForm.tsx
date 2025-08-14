@@ -16,7 +16,7 @@ import {
 	User,
 } from "lucide-react";
 import ToolTip from "./Tooltip";
-import { Invoice } from "@/app/dashboard/pages/Invoices";
+import { Invoice } from "@/app/dashboard/dashboardpages/Invoices";
 import { useLocale } from "@/context/LocaleContext";
 
 export interface InvoiceContact {

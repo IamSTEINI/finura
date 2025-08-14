@@ -1,3 +1,4 @@
+"use client";
 import Calendar from "@/app/components/ui/Calender";
 import Card from "@/app/components/ui/Card";
 import CAreaChart from "@/app/components/ui/Charts/AreaChart";
@@ -25,6 +26,11 @@ function Dashboard() {
 	const [invoices, setInvoices] = useState<Invoice[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	interface UserInfo {
+		firstname: string;
+		lastname: string;
+	}
+	const [userObj, setUserObj] = useState<UserInfo | null>(null);
 	const { t } = useLocale();
 	const redisServiceUrl =
 		process.env.REDIS_SERVICE_URL || "http://185.141.216.228:8001";
@@ -41,7 +47,7 @@ function Dashboard() {
 		}
 
 		try {
-			const response = await fetch(redisServiceUrl+"/api/invoices", {
+			const response = await fetch(redisServiceUrl + "/api/invoices", {
 				method: "GET",
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -189,10 +195,12 @@ function Dashboard() {
 	const monthlyGoal = 20000;
 	const currentProgress = totalGrossAmount;
 
-	const userObj =
-		localStorage && localStorage.getItem("USER_INFO")
-			? JSON.parse(localStorage.getItem("USER_INFO") || "{}")
-			: null;
+	useEffect(() => {
+		const user = localStorage.getItem("USER_INFO");
+		if (user) {
+			setUserObj(JSON.parse(user));
+		}
+	}, []);
 
 	return (
 		<div className="w-full h-full flex justify-center">
